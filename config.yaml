@@ -1,0 +1,23 @@
+sources:
+  rss:
+    - url: "https://www.bleepingcomputer.com/feed/"
+      name: "BleepingComputer"
+    - url: "https://feeds.feedburner.com/TheHackersNews"
+      name: "TheHackerNews"
+
+keywords:
+  - "Cisco"
+  - "Réseau"
+  - "Docker"
+  - "Kubernetes"
+  - "Linux"
+  - "Windows"
+  - "Active Directory"
+  - "Python"
+  - "Django"
+  - "VMware"
+  - "Azure"
+  - "AWS"
+
+settings:
+  default_severity_threshold: 0

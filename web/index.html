@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Cyber Threat Intelligence Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-content">
+            <h1>🛡️ Mon Cyber Threat Intelligence Dashboard</h1>
+            <p>Une veille quotidienne et automatisée pour anticiper les cybermenaces ciblant mon périmètre.</p>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        <!-- KPIs Section -->
+        <section class="kpi-container" aria-label="Statistiques globales">
+            <div class="kpi-card" id="kpi-total">
+                <h3>Total Alertes</h3>
+                <p class="kpi-value">0</p>
+            </div>
+            <div class="kpi-card" id="kpi-critical">
+                <h3>Critiques / Hautes</h3>
+                <p class="kpi-value">0</p>
+            </div>
+            <div class="kpi-card" id="kpi-match">
+                <h3>Mes Serveurs (Matchs)</h3>
+                <p class="kpi-value">0</p>
+            </div>
+        </section>
+
+        <!-- Controls Section -->
+        <section class="controls-container" aria-label="Filtres de recherche">
+            <div class="filter-group">
+                <button class="filter-btn active" data-filter="all">Tout voir</button>
+                <button class="filter-btn" data-filter="critical">Uniquement Critiques</button>
+                <button class="filter-btn" data-filter="servers">Mes Serveurs (Mots-clés)</button>
+            </div>
+            <div class="last-updated" id="last-updated-text">
+                Mise à jour : En cours de chargement...
+            </div>
+        </section>
+
+        <!-- Alerts Grid Section -->
+        <section class="alerts-grid" id="alerts-grid" aria-label="Grille des menaces actives">
+            <div class="loader">Je récupère mes données...</div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Créé automatiquement par mes scripts Python et l'API NIST NVD - <a href="https://github.com/marco1t/Cyber-Threat-Intelligence-Dashboard">Repo GitHub</a></p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
