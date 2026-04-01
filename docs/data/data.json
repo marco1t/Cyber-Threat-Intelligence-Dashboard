@@ -1,4 +1,85 @@
 {
-    "last_updated": "2026-04-01T00:00:00.000000",
-    "alerts": []
+    "last_updated": "2026-04-01T23:05:00.000000",
+    "alerts": [
+        {
+            "id": "CVE-2026-1045",
+            "title": "Vulnérabilité CVE-2026-1045 (Linux Kernel Privilege Escalation)",
+            "source": "NIST NVD",
+            "type": "CVE",
+            "severity": "CRITICAL",
+            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-1045",
+            "match": true,
+            "date": "2026-04-01T14:30:00"
+        },
+        {
+            "id": "CVE-2026-0982",
+            "title": "Vulnérabilité CVE-2026-0982 (Docker API Exposure Bug)",
+            "source": "NIST NVD",
+            "type": "CVE",
+            "severity": "HIGH",
+            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-0982",
+            "match": true,
+            "date": "2026-03-31T09:15:00"
+        },
+        {
+            "id": "CVE-2026-0811",
+            "title": "Vulnérabilité CVE-2026-0811 (Windows Active Directory Bypass)",
+            "source": "NIST NVD",
+            "type": "CVE",
+            "severity": "CRITICAL",
+            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-0811",
+            "match": true,
+            "date": "2026-03-30T16:45:00"
+        },
+        {
+            "id": "CVE-2026-1123",
+            "title": "Vulnérabilité CVE-2026-1123 (Cisco Router Auth Bypass)",
+            "source": "NIST NVD",
+            "type": "CVE",
+            "severity": "CRITICAL",
+            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-1123",
+            "match": true,
+            "date": "2026-04-01T08:10:00"
+        },
+        {
+            "id": "CVE-2026-0742",
+            "title": "Vulnérabilité CVE-2026-0742 (Nginx Buffer Overflow)",
+            "source": "NIST NVD",
+            "type": "CVE",
+            "severity": "MEDIUM",
+            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-0742",
+            "match": false,
+            "date": "2026-03-29T11:20:00"
+        },
+        {
+            "id": "https://www.thehackernews.com/article1",
+            "title": "Nouvelle campagne de phishing ciblant Azure et AWS",
+            "source": "TheHackerNews",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://thehackernews.com/",
+            "match": true,
+            "date": "2026-04-01T10:00:00"
+        },
+        {
+            "id": "https://www.bleepingcomputer.com/article1",
+            "title": "Le Ransomware LockBit exploite les failles VMware",
+            "source": "BleepingComputer",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://www.bleepingcomputer.com/",
+            "match": true,
+            "date": "2026-03-31T15:40:00"
+        },
+        {
+            "id": "https://www.thehackernews.com/article2",
+            "title": "Un acteur étatique attaque des téléphones Android",
+            "source": "TheHackerNews",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://thehackernews.com/",
+            "match": false,
+            "date": "2026-03-30T14:15:00"
+        }
+    ]
 }
