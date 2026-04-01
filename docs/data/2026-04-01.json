@@ -1,0 +1,155 @@
+{
+    "last_updated": "2026-04-01T21:13:02.977084",
+    "alerts": [
+        {
+            "id": "https://www.bleepingcomputer.com/news/security/new-eviltokens-service-fuels-microsoft-device-code-phishing-attacks/",
+            "title": "New EvilTokens service fuels Microsoft device code phishing attacks",
+            "source": "BleepingComputer",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://www.bleepingcomputer.com/news/security/new-eviltokens-service-fuels-microsoft-device-code-phishing-attacks/",
+            "match": false,
+            "date": "Wed, 01 Apr 2026 15:42:25 -0400"
+        },
+        {
+            "id": "https://www.bleepingcomputer.com/news/security/novoice-android-malware-on-google-play-infected-23-million-devices/",
+            "title": "'NoVoice' Android malware on Google Play infected 2.3 million devices",
+            "source": "BleepingComputer",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://www.bleepingcomputer.com/news/security/novoice-android-malware-on-google-play-infected-23-million-devices/",
+            "match": false,
+            "date": "Wed, 01 Apr 2026 14:07:21 -0400"
+        },
+        {
+            "id": "https://www.bleepingcomputer.com/news/security/routine-access-is-powering-modern-intrusions-a-new-threat-report-finds/",
+            "title": "Routine Access Is Powering Modern Intrusions, a New Threat Report Finds",
+            "source": "BleepingComputer",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://www.bleepingcomputer.com/news/security/routine-access-is-powering-modern-intrusions-a-new-threat-report-finds/",
+            "match": false,
+            "date": "Wed, 01 Apr 2026 10:05:15 -0400"
+        },
+        {
+            "id": "https://www.bleepingcomputer.com/news/security/fbi-warns-against-using-chinese-mobile-apps-over-to-data-security-risks/",
+            "title": "FBI warns against using Chinese mobile apps due to privacy risks",
+            "source": "BleepingComputer",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://www.bleepingcomputer.com/news/security/fbi-warns-against-using-chinese-mobile-apps-over-to-data-security-risks/",
+            "match": false,
+            "date": "Wed, 01 Apr 2026 07:39:10 -0400"
+        },
+        {
+            "id": "https://www.bleepingcomputer.com/news/security/google-fixes-fourth-chrome-zero-day-exploited-in-attacks-in-2026/",
+            "title": "Google fixes fourth Chrome zero-day exploited in attacks in 2026",
+            "source": "BleepingComputer",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://www.bleepingcomputer.com/news/security/google-fixes-fourth-chrome-zero-day-exploited-in-attacks-in-2026/",
+            "match": false,
+            "date": "Wed, 01 Apr 2026 06:25:36 -0400"
+        },
+        {
+            "id": "https://thehackernews.com/2026/04/cert-ua-impersonation-campaign-spread.html",
+            "title": "CERT-UA Impersonation Campaign Spread AGEWHEEZE Malware to 1 Million Emails",
+            "source": "TheHackerNews",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://thehackernews.com/2026/04/cert-ua-impersonation-campaign-spread.html",
+            "match": false,
+            "date": "Wed, 01 Apr 2026 21:40:00 +0530"
+        },
+        {
+            "id": "https://thehackernews.com/2026/04/microsoft-warns-of-whatsapp-delivered.html",
+            "title": "Microsoft Warns of WhatsApp-Delivered VBS Malware Hijacking Windows via UAC Bypass",
+            "source": "TheHackerNews",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://thehackernews.com/2026/04/microsoft-warns-of-whatsapp-delivered.html",
+            "match": true,
+            "date": "Wed, 01 Apr 2026 19:40:00 +0530"
+        },
+        {
+            "id": "https://thehackernews.com/2026/04/block-prompt-not-work-end-of-doctor-no.html",
+            "title": "Block the Prompt, Not the Work: The End of \"Doctor No\"",
+            "source": "TheHackerNews",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://thehackernews.com/2026/04/block-prompt-not-work-end-of-doctor-no.html",
+            "match": false,
+            "date": "Wed, 01 Apr 2026 18:16:00 +0530"
+        },
+        {
+            "id": "https://thehackernews.com/2026/04/casbaneiro-phishing-targets-latin.html",
+            "title": "Casbaneiro Phishing Targets Latin America and Europe Using Dynamic PDF Lures",
+            "source": "TheHackerNews",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://thehackernews.com/2026/04/casbaneiro-phishing-targets-latin.html",
+            "match": true,
+            "date": "Wed, 01 Apr 2026 18:06:00 +0530"
+        },
+        {
+            "id": "https://thehackernews.com/2026/04/new-chrome-zero-day-cve-2026-5281-under.html",
+            "title": "New Chrome Zero-Day CVE-2026-5281 Under Active Exploitation \u2014 Patch Released",
+            "source": "TheHackerNews",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://thehackernews.com/2026/04/new-chrome-zero-day-cve-2026-5281-under.html",
+            "match": false,
+            "date": "Wed, 01 Apr 2026 17:12:00 +0530"
+        },
+        {
+            "id": "CVE-1999-0095",
+            "title": "Vuln\u00e9rabilit\u00e9 CVE-1999-0095",
+            "source": "NIST NVD",
+            "type": "CVE",
+            "severity": "Inconnu",
+            "link": "https://nvd.nist.gov/vuln/detail/CVE-1999-0095",
+            "match": false,
+            "date": "1988-10-01T04:00:00.000"
+        },
+        {
+            "id": "CVE-1999-0082",
+            "title": "Vuln\u00e9rabilit\u00e9 CVE-1999-0082",
+            "source": "NIST NVD",
+            "type": "CVE",
+            "severity": "Inconnu",
+            "link": "https://nvd.nist.gov/vuln/detail/CVE-1999-0082",
+            "match": false,
+            "date": "1988-11-11T05:00:00.000"
+        },
+        {
+            "id": "CVE-1999-1471",
+            "title": "Vuln\u00e9rabilit\u00e9 CVE-1999-1471",
+            "source": "NIST NVD",
+            "type": "CVE",
+            "severity": "Inconnu",
+            "link": "https://nvd.nist.gov/vuln/detail/CVE-1999-1471",
+            "match": false,
+            "date": "1989-01-01T05:00:00.000"
+        },
+        {
+            "id": "CVE-1999-1122",
+            "title": "Vuln\u00e9rabilit\u00e9 CVE-1999-1122",
+            "source": "NIST NVD",
+            "type": "CVE",
+            "severity": "Inconnu",
+            "link": "https://nvd.nist.gov/vuln/detail/CVE-1999-1122",
+            "match": false,
+            "date": "1989-07-26T04:00:00.000"
+        },
+        {
+            "id": "CVE-1999-1467",
+            "title": "Vuln\u00e9rabilit\u00e9 CVE-1999-1467",
+            "source": "NIST NVD",
+            "type": "CVE",
+            "severity": "Inconnu",
+            "link": "https://nvd.nist.gov/vuln/detail/CVE-1999-1467",
+            "match": false,
+            "date": "1989-10-26T04:00:00.000"
+        }
+    ]
+}
