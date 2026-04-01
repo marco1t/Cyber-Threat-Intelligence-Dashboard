@@ -115,6 +115,49 @@ body {
     gap: 1rem;
 }
 
+/* Date Picker */
+.date-group {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.date-group label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+#date-picker {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+}
+
+#date-picker::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}
+
+/* Chart Container */
+.chart-container {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    backdrop-filter: var(--glass-blur);
+    margin-bottom: 2rem;
+    height: 300px;
+    position: relative;
+    width: 100%;
+}
+
 .filter-group {
     display: flex;
     gap: 0.8rem;

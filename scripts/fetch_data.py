@@ -134,6 +134,41 @@ class ThreatIntelFetcher:
             with open(self.data_path, 'w', encoding='utf-8') as f:
                 json.dump(self.new_data, f, ensure_ascii=False, indent=4)
             logging.info("J'ai sauvegardé mes nouvelles données JSON avec succès.")
+            
+            # Je sauvegarde également une archive pour la date courante
+            today_str = datetime.now().strftime("%Y-%m-%d")
+            data_dir = os.path.dirname(self.data_path)
+            daily_path = os.path.join(data_dir, f"{today_str}.json")
+            with open(daily_path, 'w', encoding='utf-8') as f:
+                json.dump(self.new_data, f, ensure_ascii=False, indent=4)
+                
+            # Je mets à jour mon index.json contenant l'historique
+            index_path = os.path.join(data_dir, "index.json")
+            index_data = []
+            if os.path.exists(index_path):
+                try:
+                    with open(index_path, 'r', encoding='utf-8') as f:
+                        index_data = json.load(f)
+                except Exception:
+                    pass
+            
+            # Je retire l'entrée du jour si elle existe déjà, pour la remplacer
+            index_data = [item for item in index_data if item.get("date") != today_str]
+            critical_alerts = sum(1 for a in self.new_data["alerts"] if a.get("severity", "").upper() in ["CRITICAL", "HIGH"])
+            
+            index_data.append({
+                "date": today_str,
+                "file": f"{today_str}.json",
+                "total_cves": len(self.new_data["alerts"]),
+                "critical_cves": critical_alerts
+            })
+            
+            # Je trie par date croissante par sécurité
+            index_data = sorted(index_data, key=lambda x: x["date"])
+            
+            with open(index_path, 'w', encoding='utf-8') as f:
+                json.dump(index_data, f, ensure_ascii=False, indent=4)
+            logging.info("J'ai mis à jour l'historique et index.json.")
         except Exception as e:
             logging.error(f"Je n'ai pas pu sauvegarder mon JSON : {e}")
 

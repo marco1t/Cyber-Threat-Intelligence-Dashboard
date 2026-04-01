@@ -12,14 +12,74 @@ document.addEventListener('DOMContentLoaded', () => {
     const kpiCritical = document.querySelector('#kpi-critical .kpi-value');
     const kpiMatch = document.querySelector('#kpi-match .kpi-value');
 
+    // Date Picker
+    const datePicker = document.getElementById('date-picker');
+
     // Ma variable pour stocker toutes les données récupérées
     let allAlerts = [];
+    let trendChartInstance = null;
 
-    // Je lance la récupération asynchrone de mes données JSON
-    async function fetchThreatData() {
+    // Je lance la récupération de l'index pour initialiser mon graphe
+    async function fetchIndexAndInitChart() {
         try {
+            const response = await fetch('data/index.json', { cache: "no-store" });
+            if (!response.ok) return;
+            const indexData = await response.json();
+            
+            // Je prends max 30 jours
+            const recentData = indexData.slice(-30);
+            const labels = recentData.map(item => item.date);
+            const criticalData = recentData.map(item => item.critical_cves);
+            
+            const ctx = document.getElementById('trendChart').getContext('2d');
+            if (trendChartInstance) {
+                trendChartInstance.destroy();
+            }
+            
+            trendChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Vulnérabilités Critiques (30 derniers j.)',
+                        data: criticalData,
+                        borderColor: 'rgba(255, 69, 58, 1)',
+                        backgroundColor: 'rgba(255, 69, 58, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#e5e5ea' } }
+                    },
+                    scales: {
+                        x: { ticks: { color: '#8e8e93' }, grid: { color: '#3a3a3c' } },
+                        y: { ticks: { color: '#8e8e93', stepSize: 1 }, grid: { color: '#3a3a3c' }, beginAtZero: true }
+                    }
+                }
+            });
+            
+            // Si on a des dates, je définis le calendrier sur le plus récent
+            if (recentData.length > 0) {
+                const latestDate = recentData[recentData.length - 1].date;
+                datePicker.value = latestDate;
+                datePicker.max = latestDate;
+            }
+        } catch (error) {
+            console.error("Impossible de charger l'historique :", error);
+        }
+    }
+
+    // Je lance la récupération asynchrone de mes données JSON pour une date donnée ou 'data.json'
+    async function fetchThreatData(targetFile = 'data/data.json') {
+        try {
+            grid.innerHTML = '<div class="loader">Je récupère mes données...</div>';
             // Puisque ce sera hébergé sur GitHub Pages ou en statique, je pointe vers le sous-dossier data
-            const response = await fetch('data/data.json', { cache: "no-store" });
+            const response = await fetch(targetFile, { cache: "no-store" });
             
             if (!response.ok) {
                 throw new Error("HTTP erreur ! " + response.status);
@@ -136,6 +196,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Je lance ma requête initiale
-    fetchThreatData();
+    // Écouteur pour mon calendrier
+    datePicker.addEventListener('change', (e) => {
+        const selectedDate = e.target.value;
+        if (selectedDate) {
+            fetchThreatData(`data/${selectedDate}.json`);
+        }
+    });
+
+    // Je lance ma récupération de l'index et des données par défaut
+    fetchIndexAndInitChart().then(() => fetchThreatData());
 });

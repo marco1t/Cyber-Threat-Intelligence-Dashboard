@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon Cyber Threat Intelligence Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header class="app-header">
@@ -31,12 +32,21 @@
             </div>
         </section>
 
+        <!-- Chart Section -->
+        <section class="chart-container" aria-label="Tendance des vulnérabilités">
+            <canvas id="trendChart"></canvas>
+        </section>
+
         <!-- Controls Section -->
         <section class="controls-container" aria-label="Filtres de recherche">
             <div class="filter-group">
                 <button class="filter-btn active" data-filter="all">Tout voir</button>
                 <button class="filter-btn" data-filter="critical">Uniquement Critiques</button>
                 <button class="filter-btn" data-filter="servers">Mes Technologies</button>
+            </div>
+            <div class="date-group">
+                <label for="date-picker">Date :</label>
+                <input type="date" id="date-picker" />
             </div>
             <div class="last-updated" id="last-updated-text">
                 Mise à jour : En cours de chargement...
