@@ -18,4 +18,4 @@ L'objectif de ce projet est de consolider ma veille technologique en cybersécur
 *   **Contrôle & Automation** : GitHub Actions (Cron Task) vérifiant la pertinence des changements pour maintenir un historique Git propre, sans commiter pour rien. 
 *   **Web Frontend** : Hébergement via GitHub Pages. HTML5 Sémantique, CSS Vanilla (Design Premium et Dark Mode) et requêtes asynchrones en JS via Fetch.
 
-Rejoignez le Dashboard interactif : [Lien GitHub Pages, maintenant configuré sur le dossier /docs]
+Rejoignez le Dashboard interactif : [https://marco1t.github.io/Cyber-Threat-Intelligence-Dashboard/](https://marco1t.github.io/Cyber-Threat-Intelligence-Dashboard/)
