@@ -77,8 +77,16 @@ class ThreatIntelFetcher:
         url = "https://services.nvd.nist.gov/rest/json/cves/2.0"
         # Je limite à 5 résultats pour faire simple et éviter le rate-limiting agressif
         params = {"resultsPerPage": 5}
+        headers = {}
+        
+        # Je récupère ma clé d'API si elle est définie dans l'environnement
+        nvd_api_key = os.environ.get("NVD_API_KEY")
+        if nvd_api_key:
+            headers["apiKey"] = nvd_api_key
+            logging.info("J'utilise ma clé d'API NVD pour contourner le rate-limit.")
+
         try:
-            response = requests.get(url, params=params, timeout=10)
+            response = requests.get(url, headers=headers, params=params, timeout=10)
             if response.status_code == 200:
                 data = response.json()
                 vulnerabilities = data.get("vulnerabilities", [])

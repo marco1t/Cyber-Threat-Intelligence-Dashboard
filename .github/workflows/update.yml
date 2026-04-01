@@ -29,6 +29,8 @@ jobs:
 
       - name: J'exécute mon script de récupération Threat Intel
         run: python scripts/fetch_data.py
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
 
       - name: Je vérifie les changements et je commit mes nouveautés
         run: |
