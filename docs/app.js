@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Je lance la récupération asynchrone de mes données JSON
     async function fetchThreatData() {
         try {
-            // Puisque ce sera hébergé sur GitHub Pages ou en statique, je pointe vers le rep parent
-            const response = await fetch('../data/data.json', { cache: "no-store" });
+            // Puisque ce sera hébergé sur GitHub Pages ou en statique, je pointe vers le sous-dossier data
+            const response = await fetch('data/data.json', { cache: "no-store" });
             
             if (!response.ok) {
                 throw new Error("HTTP erreur ! " + response.status);

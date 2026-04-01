@@ -10,7 +10,7 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class ThreatIntelFetcher:
-    def __init__(self, config_path="config.yaml", data_path="data/data.json", readme_path="README.md"):
+    def __init__(self, config_path="config.yaml", data_path="docs/data/data.json", readme_path="README.md"):
         self.config_path = config_path
         self.data_path = data_path
         self.readme_path = readme_path

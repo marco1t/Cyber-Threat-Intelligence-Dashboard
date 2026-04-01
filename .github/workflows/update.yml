@@ -37,7 +37,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
-          git add data/data.json README.md
+          git add docs/data/data.json README.md
           
           # Si mon script a généré de nouveaux fichiers, je les inclus dans mon tableau de bord
           if git diff-index --quiet HEAD; then
