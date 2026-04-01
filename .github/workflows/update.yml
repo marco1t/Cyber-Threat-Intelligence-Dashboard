@@ -2,10 +2,8 @@ name: Mise à jour quotidienne du Cyber Dashboard
 
 on:
   schedule:
-    # Je lance ce processus tous les jours à 6h00 UTC
     - cron: '0 6 * * *'
   workflow_dispatch:
-    # Je garde la possibilité de le lancer manuellement
 
 permissions:
   contents: write
