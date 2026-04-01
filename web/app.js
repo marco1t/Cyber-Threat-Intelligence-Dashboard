@@ -1,4 +1,5 @@
 // app.js
+// Logique principale du Threat Intel Dashboard
 
 document.addEventListener('DOMContentLoaded', () => {
     // Je sélectionne mes éléments DOM principaux
