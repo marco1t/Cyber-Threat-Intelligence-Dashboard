@@ -1,6 +1,16 @@
 {
-    "last_updated": "2026-04-03T07:12:16.592852",
+    "last_updated": "2026-04-03T09:01:25.090136",
     "alerts": [
+        {
+            "id": "https://www.bleepingcomputer.com/news/microsoft/microsoft-now-force-upgrades-unmanaged-windows-11-24h2-pcs/",
+            "title": "Microsoft now force upgrades unmanaged Windows 11 24H2 PCs",
+            "source": "BleepingComputer",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://www.bleepingcomputer.com/news/microsoft/microsoft-now-force-upgrades-unmanaged-windows-11-24h2-pcs/",
+            "match": true,
+            "date": "Fri, 03 Apr 2026 03:55:40 -0400"
+        },
         {
             "id": "https://www.bleepingcomputer.com/news/security/cert-eu-european-commission-hack-exposes-data-of-30-eu-entities/",
             "title": "CERT-EU: European Commission hack exposes data of 30 EU entities",
@@ -40,16 +50,6 @@
             "link": "https://www.bleepingcomputer.com/news/security/residential-proxies-evaded-ip-reputation-checks-in-78-percent-of-4b-sessions/",
             "match": false,
             "date": "Thu, 02 Apr 2026 11:21:02 -0400"
-        },
-        {
-            "id": "https://www.bleepingcomputer.com/news/security/adversaries-exploit-vacant-homes-to-intercept-mail-in-hybrid-cybercrime/",
-            "title": "Adversaries Exploit Vacant Homes to Intercept Mail in Hybrid Cybercrime",
-            "source": "BleepingComputer",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://www.bleepingcomputer.com/news/security/adversaries-exploit-vacant-homes-to-intercept-mail-in-hybrid-cybercrime/",
-            "match": false,
-            "date": "Thu, 02 Apr 2026 10:01:11 -0400"
         },
         {
             "id": "https://thehackernews.com/2026/04/hackers-exploit-cve-2025-55182-to.html",
