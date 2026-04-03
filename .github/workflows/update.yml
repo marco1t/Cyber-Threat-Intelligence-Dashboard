@@ -32,8 +32,8 @@ jobs:
 
       - name: Je vérifie les changements et je commit mes nouveautés
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "marco1t"
+          git config --global user.email "105946881+marco1t@users.noreply.github.com"
           
           git add docs/data/ README.md
           
