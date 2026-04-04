@@ -1,10 +1,13 @@
-import os
 import json
-import yaml
+import logging
+import os
+import re
+from datetime import datetime, timedelta, timezone
+from email.utils import parsedate_to_datetime
+
 import feedparser
 import requests
-from datetime import datetime
-import logging
+import yaml
 
 # Configuration de mes logs
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -14,9 +17,19 @@ class ThreatIntelFetcher:
         self.config_path = config_path
         self.data_path = data_path
         self.readme_path = readme_path
+        self.run_started_at = datetime.now(timezone.utc)
         self.config = self._load_config()
+        self.settings = self.config.get("settings", {})
         self.current_data = self._load_current_data()
-        self.new_data = {"last_updated": datetime.now().isoformat(), "alerts": []}
+        self.force_daily_snapshot = bool(self.settings.get("force_daily_snapshot", False))
+        self.cve_days_window = int(self.settings.get("cve_days_window", 7))
+        self.max_entries_per_rss_source = int(self.settings.get("max_entries_per_rss_source", 5))
+        self.max_nvd_results = int(self.settings.get("max_nvd_results", 10))
+        self.request_timeout = int(self.settings.get("request_timeout", 15))
+        self.source_attempts = 0
+        self.successful_sources = []
+        self.failed_sources = []
+        self.new_data = {"last_updated": self._format_iso(self.run_started_at), "alerts": []}
 
     def _load_config(self):
         # Je charge ma configuration YAML
@@ -37,10 +50,98 @@ class ThreatIntelFetcher:
                 logging.error(f"Erreur lors de la lecture de mon fichier de données local : {e}")
         return {"alerts": []}
 
+    def _format_iso(self, dt):
+        if dt is None:
+            dt = self.run_started_at
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt.astimezone(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
+
+    def _parse_datetime(self, value):
+        if not value:
+            return None
+
+        if isinstance(value, datetime):
+            dt = value
+        else:
+            text = str(value).strip()
+            try:
+                dt = datetime.fromisoformat(text.replace("Z", "+00:00"))
+            except ValueError:
+                try:
+                    dt = parsedate_to_datetime(text)
+                except (TypeError, ValueError):
+                    return None
+
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt.astimezone(timezone.utc)
+
+    def _normalize_date(self, value):
+        parsed = self._parse_datetime(value)
+        if parsed is None:
+            parsed = self.run_started_at
+        return self._format_iso(parsed)
+
+    def _register_source_result(self, source_name, success, reason=None):
+        self.source_attempts += 1
+        if success:
+            self.successful_sources.append(source_name)
+            return
+
+        failure = {"source": source_name}
+        if reason:
+            failure["reason"] = reason
+        self.failed_sources.append(failure)
+
+    def _extract_severity(self, metrics):
+        for metric_key in ("cvssMetricV40", "cvssMetricV31", "cvssMetricV30", "cvssMetricV2"):
+            metric_entries = metrics.get(metric_key, [])
+            if not metric_entries:
+                continue
+
+            metric = metric_entries[0]
+            severity = metric.get("baseSeverity")
+            if severity:
+                return severity
+
+            severity = metric.get("cvssData", {}).get("baseSeverity")
+            if severity:
+                return severity
+
+        return "Inconnu"
+
+    def _finalize_alerts(self):
+        deduplicated_alerts = {}
+
+        for alert in self.new_data["alerts"]:
+            alert_id = alert.get("id")
+            if not alert_id:
+                continue
+
+            normalized_alert = dict(alert)
+            normalized_alert["date"] = self._normalize_date(normalized_alert.get("date"))
+            current_entry = deduplicated_alerts.get(alert_id)
+
+            if current_entry is None:
+                deduplicated_alerts[alert_id] = normalized_alert
+                continue
+
+            current_date = self._parse_datetime(current_entry.get("date"))
+            candidate_date = self._parse_datetime(normalized_alert.get("date"))
+            if candidate_date and (current_date is None or candidate_date >= current_date):
+                deduplicated_alerts[alert_id] = normalized_alert
+
+        self.new_data["alerts"] = sorted(
+            deduplicated_alerts.values(),
+            key=lambda alert: self._parse_datetime(alert.get("date")) or datetime.min.replace(tzinfo=timezone.utc),
+            reverse=True,
+        )
+
     def _check_keywords(self, text):
         # Je vérifie si mes mots-clés configurés sont présents dans le texte
         keywords = self.config.get("keywords", [])
-        text_lower = text.lower()
+        text_lower = (text or "").lower()
         for kw in keywords:
             if kw.lower() in text_lower:
                 return True
@@ -50,33 +151,56 @@ class ThreatIntelFetcher:
         # Je parcours mes flux RSS configurés
         rss_sources = self.config.get("sources", {}).get("rss", [])
         for source in rss_sources:
-            logging.info(f"Je récupère le flux RSS de : {source['name']}")
-            feed = feedparser.parse(source['url'])
-            # Je prends seulement les 5 derniers articles pour ne pas surcharger
-            for entry in feed.entries[:5]:
-                title = entry.title
-                summary = entry.get('summary', '')
-                link = entry.link
-                is_match = self._check_keywords(title + " " + summary)
-                
-                alert = {
-                    "id": link,
-                    "title": title,
-                    "source": source['name'],
-                    "type": "Article RSS",
-                    "severity": "Info", 
-                    "link": link,
-                    "match": is_match,
-                    "date": entry.get('published', datetime.now().isoformat())
-                }
-                self.new_data["alerts"].append(alert)
+            source_name = source.get("name", "Source RSS inconnue")
+            source_url = source.get("url")
+            logging.info(f"Je récupère le flux RSS de : {source_name}")
+
+            try:
+                feed = feedparser.parse(source_url)
+                status_code = getattr(feed, "status", 200)
+                entries = getattr(feed, "entries", [])
+
+                if status_code >= 400:
+                    raise ValueError(f"HTTP {status_code}")
+                if getattr(feed, "bozo", 0) and not entries:
+                    raise ValueError(str(getattr(feed, "bozo_exception", "Flux RSS invalide")))
+
+                for index, entry in enumerate(entries[: self.max_entries_per_rss_source], start=1):
+                    title = entry.get("title", "Article RSS")
+                    summary = entry.get("summary", "") or entry.get("description", "")
+                    link = entry.get("link") or f"{source_url}#entry-{index}"
+                    is_match = self._check_keywords(f"{title} {summary}")
+
+                    alert = {
+                        "id": link,
+                        "title": title,
+                        "source": source_name,
+                        "type": "Article RSS",
+                        "severity": "Info",
+                        "link": link,
+                        "match": is_match,
+                        "date": self._normalize_date(
+                            entry.get("published") or entry.get("updated") or entry.get("created")
+                        ),
+                    }
+                    self.new_data["alerts"].append(alert)
+
+                self._register_source_result(source_name, True)
+            except Exception as e:
+                logging.warning(f"Le flux {source_name} a échoué : {e}")
+                self._register_source_result(source_name, False, str(e))
 
     def fetch_nist_cve(self):
         # Je récupère les vulnérabilités récentes depuis l'API NIST NVD
         logging.info("Je récupère les données de l'API NVD du NIST...")
         url = "https://services.nvd.nist.gov/rest/json/cves/2.0"
-        # Je limite à 5 résultats pour faire simple et éviter le rate-limiting agressif
-        params = {"resultsPerPage": 5}
+        end_date = self.run_started_at
+        start_date = end_date - timedelta(days=self.cve_days_window)
+        params = {
+            "resultsPerPage": self.max_nvd_results,
+            "pubStartDate": self._format_iso(start_date),
+            "pubEndDate": self._format_iso(end_date),
+        }
         headers = {}
         
         # Je récupère ma clé d'API si elle est définie dans l'environnement
@@ -86,26 +210,31 @@ class ThreatIntelFetcher:
             logging.info("J'utilise ma clé d'API NVD pour contourner le rate-limit.")
 
         try:
-            response = requests.get(url, headers=headers, params=params, timeout=10)
-            if response.status_code == 200:
-                data = response.json()
-                vulnerabilities = data.get("vulnerabilities", [])
-                for vuln in vulnerabilities:
-                    cve = vuln.get("cve", {})
-                    cve_id = cve.get("id", "Inconnu")
-                    descriptions = cve.get("descriptions", [])
-                    desc_text = descriptions[0].get("value", "") if descriptions else ""
-                    
-                    # Je cherche la sévérité (V3.1 ou V3.0)
-                    metrics = cve.get("metrics", {})
-                    cvss_data = metrics.get("cvssMetricV31", metrics.get("cvssMetricV30", []))
-                    severity = "Inconnu"
-                    if cvss_data:
-                        severity = cvss_data[0].get("cvssData", {}).get("baseSeverity", "Inconnu")
+            response = requests.get(url, headers=headers, params=params, timeout=self.request_timeout)
+            response.raise_for_status()
 
-                    is_match = self._check_keywords(desc_text)
-                    
-                    alert = {
+            data = response.json()
+            vulnerabilities = data.get("vulnerabilities", [])
+            fresh_alerts = []
+
+            for vuln in vulnerabilities:
+                cve = vuln.get("cve", {})
+                cve_id = cve.get("id", "Inconnu")
+                descriptions = cve.get("descriptions", [])
+                desc_text = descriptions[0].get("value", "") if descriptions else ""
+                published_at = self._parse_datetime(cve.get("published"))
+
+                if published_at is None:
+                    continue
+                if published_at < start_date or published_at > end_date:
+                    continue
+
+                metrics = cve.get("metrics", {})
+                severity = self._extract_severity(metrics)
+                is_match = self._check_keywords(desc_text)
+
+                fresh_alerts.append(
+                    {
                         "id": cve_id,
                         "title": f"Vulnérabilité {cve_id}",
                         "source": "NIST NVD",
@@ -113,13 +242,16 @@ class ThreatIntelFetcher:
                         "severity": severity,
                         "link": f"https://nvd.nist.gov/vuln/detail/{cve_id}",
                         "match": is_match,
-                        "date": cve.get("published", datetime.now().isoformat())
+                        "date": self._format_iso(published_at),
                     }
-                    self.new_data["alerts"].append(alert)
-            else:
-                logging.warning(f"L'API NIST a répondu avec le statut : {response.status_code}")
+                )
+
+            fresh_alerts.sort(key=lambda alert: self._parse_datetime(alert["date"]), reverse=True)
+            self.new_data["alerts"].extend(fresh_alerts[: self.max_nvd_results])
+            self._register_source_result("NIST NVD", True)
         except Exception as e:
             logging.error(f"Erreur lors de la requête vers le NIST : {e}")
+            self._register_source_result("NIST NVD", False, str(e))
 
     def has_new_data(self):
         # Je compare mes nouveaux IDs avec les anciens pour voir s'il y a du neuf
@@ -136,7 +268,7 @@ class ThreatIntelFetcher:
             logging.info("J'ai sauvegardé mes nouvelles données JSON avec succès.")
             
             # Je sauvegarde également une archive pour la date courante
-            today_str = datetime.now().strftime("%Y-%m-%d")
+            today_str = self.run_started_at.strftime("%Y-%m-%d")
             data_dir = os.path.dirname(self.data_path)
             daily_path = os.path.join(data_dir, f"{today_str}.json")
             with open(daily_path, 'w', encoding='utf-8') as f:
@@ -177,7 +309,7 @@ class ThreatIntelFetcher:
         try:
             critical_alerts = sum(1 for a in self.new_data["alerts"] if a.get("severity", "").upper() in ["CRITICAL", "HIGH"])
             total_alerts = len(self.new_data["alerts"])
-            date_str = datetime.now().strftime("%d/%m/%Y à %H:%M")
+            date_str = self.run_started_at.astimezone(timezone.utc).strftime("%d/%m/%Y à %H:%M UTC")
 
             stats_block = (
                 "<!-- STATS_START -->\n"
@@ -192,7 +324,6 @@ class ThreatIntelFetcher:
                     content = f.read()
 
                 # J'utilise une simple substitution basée sur mes balises
-                import re
                 if "<!-- STATS_START -->" in content:
                     new_content = re.sub(
                         r"<!-- STATS_START -->.*<!-- STATS_END -->", 
@@ -218,13 +349,25 @@ class ThreatIntelFetcher:
         logging.info("Je lance mon processus de récupération Threat Intel...")
         self.fetch_rss()
         self.fetch_nist_cve()
-        
-        if self.has_new_data():
-            logging.info("J'ai trouvé de nouvelles données. Je procède à la sauvegarde.")
+        self._finalize_alerts()
+
+        if self.source_attempts == 0:
+            raise RuntimeError("Aucune source n'est configurée pour la collecte.")
+        if not self.successful_sources:
+            raise RuntimeError("Toutes les sources ont échoué. Snapshot annulé pour préserver les données existantes.")
+
+        if self.failed_sources:
+            logging.warning(f"Sources en échec pendant cette exécution : {self.failed_sources}")
+
+        if not self.new_data["alerts"]:
+            logging.warning("La collecte s'est terminée sans aucune alerte exploitable.")
+
+        if self.force_daily_snapshot or self.has_new_data():
+            logging.info("Je procède à la sauvegarde du snapshot quotidien.")
             self.save_data()
             self.update_readme()
         else:
-            logging.info("Rien de nouveau sous le soleil. Je m'arrête ici pour ne pas polluer l'historique Git.")
+            logging.info("Aucun changement détecté et snapshot quotidien désactivé. Je ne sauvegarde rien.")
 
 
 if __name__ == "__main__":

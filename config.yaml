@@ -4,6 +4,14 @@ sources:
       name: "BleepingComputer"
     - url: "https://feeds.feedburner.com/TheHackersNews"
       name: "TheHackerNews"
+    - url: "https://www.securityweek.com/feed/"
+      name: "SecurityWeek"
+    - url: "https://blog.talosintelligence.com/feed/"
+      name: "Cisco Talos"
+    - url: "https://krebsonsecurity.com/feed/"
+      name: "KrebsOnSecurity"
+    - url: "https://www.darkreading.com/rss.xml"
+      name: "Dark Reading"
 
 keywords:
   - "Cisco"
@@ -20,4 +28,9 @@ keywords:
   - "AWS"
 
 settings:
+  force_daily_snapshot: true
+  cve_days_window: 7
+  max_entries_per_rss_source: 5
+  max_nvd_results: 10
+  request_timeout: 15
   default_severity_threshold: 0

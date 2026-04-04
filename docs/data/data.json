@@ -1,15 +1,55 @@
 {
-    "last_updated": "2026-04-04T07:03:37.620901",
+    "last_updated": "2026-04-04T22:23:30Z",
     "alerts": [
         {
-            "id": "https://www.bleepingcomputer.com/news/security/linkedin-secretely-scans-for-6-000-plus-chrome-extensions-collects-data/",
-            "title": "LinkedIn secretely scans for 6,000+ Chrome extensions, collects data",
+            "id": "https://www.bleepingcomputer.com/news/security/axios-npm-hack-used-fake-teams-error-fix-to-hijack-maintainer-account/",
+            "title": "Axios npm hack used fake Teams error fix to hijack maintainer account",
             "source": "BleepingComputer",
             "type": "Article RSS",
             "severity": "Info",
-            "link": "https://www.bleepingcomputer.com/news/security/linkedin-secretely-scans-for-6-000-plus-chrome-extensions-collects-data/",
+            "link": "https://www.bleepingcomputer.com/news/security/axios-npm-hack-used-fake-teams-error-fix-to-hijack-maintainer-account/",
             "match": false,
-            "date": "Fri, 03 Apr 2026 16:40:22 -0400"
+            "date": "2026-04-04T20:30:42Z"
+        },
+        {
+            "id": "https://www.bleepingcomputer.com/news/security/device-code-phishing-attacks-surge-37x-as-new-kits-spread-online/",
+            "title": "Device code phishing attacks surge 37x as new kits spread online",
+            "source": "BleepingComputer",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://www.bleepingcomputer.com/news/security/device-code-phishing-attacks-surge-37x-as-new-kits-spread-online/",
+            "match": false,
+            "date": "2026-04-04T14:17:38Z"
+        },
+        {
+            "id": "https://www.securityweek.com/european-commission-confirms-data-breach-linked-to-trivy-supply-chain-attack/",
+            "title": "European Commission Confirms Data Breach Linked to Trivy Supply Chain Attack",
+            "source": "SecurityWeek",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://www.securityweek.com/european-commission-confirms-data-breach-linked-to-trivy-supply-chain-attack/",
+            "match": true,
+            "date": "2026-04-04T10:31:00Z"
+        },
+        {
+            "id": "https://www.darkreading.com/data-privacy/inconsistent-privacy-labels-not-enough",
+            "title": "Inconsistent Privacy Labels Don't Tell Users What They Are Getting",
+            "source": "Dark Reading",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://www.darkreading.com/data-privacy/inconsistent-privacy-labels-not-enough",
+            "match": false,
+            "date": "2026-04-03T21:05:07Z"
+        },
+        {
+            "id": "https://www.bleepingcomputer.com/news/security/linkedin-secretly-scans-for-6-000-plus-chrome-extensions-collects-data/",
+            "title": "LinkedIn secretly scans for 6,000+ Chrome extensions, collects data",
+            "source": "BleepingComputer",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://www.bleepingcomputer.com/news/security/linkedin-secretly-scans-for-6-000-plus-chrome-extensions-collects-data/",
+            "match": false,
+            "date": "2026-04-03T20:40:22Z"
         },
         {
             "id": "https://www.bleepingcomputer.com/news/security/hims-and-hers-warns-of-data-breach-after-zendesk-support-ticket-breach/",
@@ -19,37 +59,7 @@
             "severity": "Info",
             "link": "https://www.bleepingcomputer.com/news/security/hims-and-hers-warns-of-data-breach-after-zendesk-support-ticket-breach/",
             "match": false,
-            "date": "Fri, 03 Apr 2026 13:41:11 -0400"
-        },
-        {
-            "id": "https://www.bleepingcomputer.com/news/security/die-linke-german-political-party-confirms-data-stolen-by-qilin-ransomware/",
-            "title": "Die Linke German political party confirms data stolen by Qilin ransomware",
-            "source": "BleepingComputer",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://www.bleepingcomputer.com/news/security/die-linke-german-political-party-confirms-data-stolen-by-qilin-ransomware/",
-            "match": false,
-            "date": "Fri, 03 Apr 2026 12:36:44 -0400"
-        },
-        {
-            "id": "https://www.bleepingcomputer.com/news/security/evolution-of-ransomware-multi-extortion-ransomware-attacks/",
-            "title": "Evolution of Ransomware: Multi-Extortion Ransomware Attacks",
-            "source": "BleepingComputer",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://www.bleepingcomputer.com/news/security/evolution-of-ransomware-multi-extortion-ransomware-attacks/",
-            "match": false,
-            "date": "Fri, 03 Apr 2026 10:05:15 -0400"
-        },
-        {
-            "id": "https://www.bleepingcomputer.com/news/microsoft/microsoft-still-working-to-fix-exchange-online-mailbox-access-issues/",
-            "title": "Microsoft still working to fix Exchange Online mailbox access issues",
-            "source": "BleepingComputer",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://www.bleepingcomputer.com/news/microsoft/microsoft-still-working-to-fix-exchange-online-mailbox-access-issues/",
-            "match": false,
-            "date": "Fri, 03 Apr 2026 07:25:20 -0400"
+            "date": "2026-04-03T17:41:11Z"
         },
         {
             "id": "https://thehackernews.com/2026/04/china-linked-ta416-targets-european.html",
@@ -59,7 +69,47 @@
             "severity": "Info",
             "link": "https://thehackernews.com/2026/04/china-linked-ta416-targets-european.html",
             "match": false,
-            "date": "Fri, 03 Apr 2026 23:04:00 +0530"
+            "date": "2026-04-03T17:34:00Z"
+        },
+        {
+            "id": "https://blog.talosintelligence.com/protecting-supply-chain-2026/",
+            "title": "Do not get high(jacked) off your own supply (chain)",
+            "source": "Cisco Talos",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://blog.talosintelligence.com/protecting-supply-chain-2026/",
+            "match": false,
+            "date": "2026-04-03T17:31:42Z"
+        },
+        {
+            "id": "https://www.darkreading.com/endpoint-security/apple-patches-darksword-ios-18",
+            "title": "Apple Breaks Precedent, Patches DarkSword for iOS 18",
+            "source": "Dark Reading",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://www.darkreading.com/endpoint-security/apple-patches-darksword-ios-18",
+            "match": false,
+            "date": "2026-04-03T17:08:57Z"
+        },
+        {
+            "id": "https://blog.talosintelligence.com/axois-npm-supply-chain-incident/",
+            "title": "Axios NPM supply chain incident",
+            "source": "Cisco Talos",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://blog.talosintelligence.com/axois-npm-supply-chain-incident/",
+            "match": false,
+            "date": "2026-04-03T17:00:22Z"
+        },
+        {
+            "id": "https://www.bleepingcomputer.com/news/security/die-linke-german-political-party-confirms-data-stolen-by-qilin-ransomware/",
+            "title": "Die Linke German political party confirms data stolen by Qilin ransomware",
+            "source": "BleepingComputer",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://www.bleepingcomputer.com/news/security/die-linke-german-political-party-confirms-data-stolen-by-qilin-ransomware/",
+            "match": false,
+            "date": "2026-04-03T16:36:44Z"
         },
         {
             "id": "https://thehackernews.com/2026/04/microsoft-details-cookie-controlled-php.html",
@@ -69,7 +119,67 @@
             "severity": "Info",
             "link": "https://thehackernews.com/2026/04/microsoft-details-cookie-controlled-php.html",
             "match": true,
-            "date": "Fri, 03 Apr 2026 21:02:00 +0530"
+            "date": "2026-04-03T15:32:00Z"
+        },
+        {
+            "id": "https://www.darkreading.com/threat-intelligence/teampcp-attacks-hacker-infighting",
+            "title": "Blast Radius of TeamPCP Attacks Expands Amid Hacker Infighting",
+            "source": "Dark Reading",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://www.darkreading.com/threat-intelligence/teampcp-attacks-hacker-infighting",
+            "match": false,
+            "date": "2026-04-03T15:11:16Z"
+        },
+        {
+            "id": "https://www.darkreading.com/remote-workforce/skull-vibrations-could-be-xr-headset-authentication",
+            "title": "Picking Up 'Skull Vibrations'? Could Be XR Headset Authentication",
+            "source": "Dark Reading",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://www.darkreading.com/remote-workforce/skull-vibrations-could-be-xr-headset-authentication",
+            "match": false,
+            "date": "2026-04-03T13:30:00Z"
+        },
+        {
+            "id": "https://www.darkreading.com/application-security/source-code-leaks-highlight-lack-supply-chain-oversight",
+            "title": "Claude Source Code Leak Highlights Big Supply Chain Missteps",
+            "source": "Dark Reading",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://www.darkreading.com/application-security/source-code-leaks-highlight-lack-supply-chain-oversight",
+            "match": false,
+            "date": "2026-04-03T13:00:00Z"
+        },
+        {
+            "id": "https://www.securityweek.com/trueconf-zero-day-exploited-in-asian-government-attacks/",
+            "title": "TrueConf Zero-Day Exploited in Asian Government Attacks",
+            "source": "SecurityWeek",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://www.securityweek.com/trueconf-zero-day-exploited-in-asian-government-attacks/",
+            "match": false,
+            "date": "2026-04-03T12:47:16Z"
+        },
+        {
+            "id": "https://www.securityweek.com/in-other-news-chatgpt-data-leak-android-rootkit-water-facility-hit-by-ransomware/",
+            "title": "In Other News: ChatGPT Data Leak, Android Rootkit, Water Facility Hit by Ransomware",
+            "source": "SecurityWeek",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://www.securityweek.com/in-other-news-chatgpt-data-leak-android-rootkit-water-facility-hit-by-ransomware/",
+            "match": false,
+            "date": "2026-04-03T12:30:53Z"
+        },
+        {
+            "id": "https://www.securityweek.com/critical-sharefile-flaws-lead-to-unauthenticated-rce/",
+            "title": "Critical ShareFile Flaws Lead to Unauthenticated RCE",
+            "source": "SecurityWeek",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://www.securityweek.com/critical-sharefile-flaws-lead-to-unauthenticated-rce/",
+            "match": true,
+            "date": "2026-04-03T12:12:22Z"
         },
         {
             "id": "https://thehackernews.com/2026/04/unc1069-social-engineering-of-axios.html",
@@ -79,7 +189,7 @@
             "severity": "Info",
             "link": "https://thehackernews.com/2026/04/unc1069-social-engineering-of-axios.html",
             "match": false,
-            "date": "Fri, 03 Apr 2026 16:34:00 +0530"
+            "date": "2026-04-03T11:04:00Z"
         },
         {
             "id": "https://thehackernews.com/2026/04/why-third-party-risk-is-biggest-gap-in.html",
@@ -89,7 +199,17 @@
             "severity": "Info",
             "link": "https://thehackernews.com/2026/04/why-third-party-risk-is-biggest-gap-in.html",
             "match": false,
-            "date": "Fri, 03 Apr 2026 16:30:00 +0530"
+            "date": "2026-04-03T11:00:00Z"
+        },
+        {
+            "id": "https://www.securityweek.com/mobile-attack-surface-expands-as-enterprises-lose-control/",
+            "title": "Mobile Attack Surface Expands as Enterprises Lose Control",
+            "source": "SecurityWeek",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://www.securityweek.com/mobile-attack-surface-expands-as-enterprises-lose-control/",
+            "match": false,
+            "date": "2026-04-03T11:00:00Z"
         },
         {
             "id": "https://thehackernews.com/2026/04/new-sparkcat-variant-in-ios-android.html",
@@ -99,57 +219,187 @@
             "severity": "Info",
             "link": "https://thehackernews.com/2026/04/new-sparkcat-variant-in-ios-android.html",
             "match": false,
-            "date": "Fri, 03 Apr 2026 14:40:00 +0530"
+            "date": "2026-04-03T09:10:00Z"
         },
         {
-            "id": "CVE-1999-0095",
-            "title": "Vulnérabilité CVE-1999-0095",
-            "source": "NIST NVD",
-            "type": "CVE",
-            "severity": "Inconnu",
-            "link": "https://nvd.nist.gov/vuln/detail/CVE-1999-0095",
+            "id": "https://blog.talosintelligence.com/the-democratisation-of-business-email-compromise-fraud/",
+            "title": "The democratisation of business email compromise fraud",
+            "source": "Cisco Talos",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://blog.talosintelligence.com/the-democratisation-of-business-email-compromise-fraud/",
             "match": false,
-            "date": "1988-10-01T04:00:00.000"
+            "date": "2026-04-02T18:00:20Z"
         },
         {
-            "id": "CVE-1999-0082",
-            "title": "Vulnérabilité CVE-1999-0082",
-            "source": "NIST NVD",
-            "type": "CVE",
-            "severity": "Inconnu",
-            "link": "https://nvd.nist.gov/vuln/detail/CVE-1999-0082",
+            "id": "https://blog.talosintelligence.com/video-the-ttp-ep-21-when-attackers-become-trusted-users/",
+            "title": "[Video] The TTP Ep 21: When Attackers Become Trusted Users",
+            "source": "Cisco Talos",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://blog.talosintelligence.com/video-the-ttp-ep-21-when-attackers-become-trusted-users/",
             "match": false,
-            "date": "1988-11-11T05:00:00.000"
+            "date": "2026-04-02T13:06:45Z"
         },
         {
-            "id": "CVE-1999-1471",
-            "title": "Vulnérabilité CVE-1999-1471",
-            "source": "NIST NVD",
-            "type": "CVE",
-            "severity": "Inconnu",
-            "link": "https://nvd.nist.gov/vuln/detail/CVE-1999-1471",
+            "id": "https://blog.talosintelligence.com/uat-10608-inside-a-large-scale-automated-credential-harvesting-operation-targeting-web-applications/",
+            "title": "UAT-10608: Inside a large-scale automated credential harvesting operation targeting web applications",
+            "source": "Cisco Talos",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://blog.talosintelligence.com/uat-10608-inside-a-large-scale-automated-credential-harvesting-operation-targeting-web-applications/",
             "match": false,
-            "date": "1989-01-01T05:00:00.000"
+            "date": "2026-04-02T10:00:57Z"
         },
         {
-            "id": "CVE-1999-1122",
-            "title": "Vulnérabilité CVE-1999-1122",
+            "id": "CVE-2026-5030",
+            "title": "Vulnérabilité CVE-2026-5030",
             "source": "NIST NVD",
             "type": "CVE",
-            "severity": "Inconnu",
-            "link": "https://nvd.nist.gov/vuln/detail/CVE-1999-1122",
+            "severity": "MEDIUM",
+            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-5030",
             "match": false,
-            "date": "1989-07-26T04:00:00.000"
+            "date": "2026-03-29T05:15:55Z"
         },
         {
-            "id": "CVE-1999-1467",
-            "title": "Vulnérabilité CVE-1999-1467",
+            "id": "CVE-2026-5024",
+            "title": "Vulnérabilité CVE-2026-5024",
             "source": "NIST NVD",
             "type": "CVE",
-            "severity": "Inconnu",
-            "link": "https://nvd.nist.gov/vuln/detail/CVE-1999-1467",
+            "severity": "HIGH",
+            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-5024",
             "match": false,
-            "date": "1989-10-26T04:00:00.000"
+            "date": "2026-03-29T04:16:00Z"
+        },
+        {
+            "id": "CVE-2026-5021",
+            "title": "Vulnérabilité CVE-2026-5021",
+            "source": "NIST NVD",
+            "type": "CVE",
+            "severity": "HIGH",
+            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-5021",
+            "match": false,
+            "date": "2026-03-29T02:16:17Z"
+        },
+        {
+            "id": "CVE-2026-5023",
+            "title": "Vulnérabilité CVE-2026-5023",
+            "source": "NIST NVD",
+            "type": "CVE",
+            "severity": "MEDIUM",
+            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-5023",
+            "match": false,
+            "date": "2026-03-29T02:16:17Z"
+        },
+        {
+            "id": "CVE-2026-2602",
+            "title": "Vulnérabilité CVE-2026-2602",
+            "source": "NIST NVD",
+            "type": "CVE",
+            "severity": "MEDIUM",
+            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-2602",
+            "match": false,
+            "date": "2026-03-29T02:16:16Z"
+        },
+        {
+            "id": "CVE-2026-5020",
+            "title": "Vulnérabilité CVE-2026-5020",
+            "source": "NIST NVD",
+            "type": "CVE",
+            "severity": "MEDIUM",
+            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-5020",
+            "match": false,
+            "date": "2026-03-29T01:15:57Z"
+        },
+        {
+            "id": "CVE-2026-4851",
+            "title": "Vulnérabilité CVE-2026-4851",
+            "source": "NIST NVD",
+            "type": "CVE",
+            "severity": "CRITICAL",
+            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-4851",
+            "match": false,
+            "date": "2026-03-29T01:15:56Z"
+        },
+        {
+            "id": "CVE-2026-5019",
+            "title": "Vulnérabilité CVE-2026-5019",
+            "source": "NIST NVD",
+            "type": "CVE",
+            "severity": "MEDIUM",
+            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-5019",
+            "match": false,
+            "date": "2026-03-29T00:16:13Z"
+        },
+        {
+            "id": "CVE-2026-5018",
+            "title": "Vulnérabilité CVE-2026-5018",
+            "source": "NIST NVD",
+            "type": "CVE",
+            "severity": "MEDIUM",
+            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-5018",
+            "match": false,
+            "date": "2026-03-28T23:16:44Z"
+        },
+        {
+            "id": "CVE-2026-5017",
+            "title": "Vulnérabilité CVE-2026-5017",
+            "source": "NIST NVD",
+            "type": "CVE",
+            "severity": "MEDIUM",
+            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-5017",
+            "match": false,
+            "date": "2026-03-28T23:16:43Z"
+        },
+        {
+            "id": "https://krebsonsecurity.com/2026/03/canisterworm-springs-wiper-attack-targeting-iran/",
+            "title": "‘CanisterWorm’ Springs Wiper Attack Targeting Iran",
+            "source": "KrebsOnSecurity",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://krebsonsecurity.com/2026/03/canisterworm-springs-wiper-attack-targeting-iran/",
+            "match": false,
+            "date": "2026-03-23T15:43:04Z"
+        },
+        {
+            "id": "https://krebsonsecurity.com/2026/03/feds-disrupt-iot-botnets-behind-huge-ddos-attacks/",
+            "title": "Feds Disrupt IoT Botnets Behind Huge DDoS Attacks",
+            "source": "KrebsOnSecurity",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://krebsonsecurity.com/2026/03/feds-disrupt-iot-botnets-behind-huge-ddos-attacks/",
+            "match": false,
+            "date": "2026-03-20T00:49:19Z"
+        },
+        {
+            "id": "https://krebsonsecurity.com/2026/03/iran-backed-hackers-claim-wiper-attack-on-medtech-firm-stryker/",
+            "title": "Iran-Backed Hackers Claim Wiper Attack on Medtech Firm Stryker",
+            "source": "KrebsOnSecurity",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://krebsonsecurity.com/2026/03/iran-backed-hackers-claim-wiper-attack-on-medtech-firm-stryker/",
+            "match": false,
+            "date": "2026-03-11T16:20:13Z"
+        },
+        {
+            "id": "https://krebsonsecurity.com/2026/03/microsoft-patch-tuesday-march-2026-edition/",
+            "title": "Microsoft Patch Tuesday, March 2026 Edition",
+            "source": "KrebsOnSecurity",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://krebsonsecurity.com/2026/03/microsoft-patch-tuesday-march-2026-edition/",
+            "match": true,
+            "date": "2026-03-11T00:32:51Z"
+        },
+        {
+            "id": "https://krebsonsecurity.com/2026/03/how-ai-assistants-are-moving-the-security-goalposts/",
+            "title": "How AI Assistants are Moving the Security Goalposts",
+            "source": "KrebsOnSecurity",
+            "type": "Article RSS",
+            "severity": "Info",
+            "link": "https://krebsonsecurity.com/2026/03/how-ai-assistants-are-moving-the-security-goalposts/",
+            "match": false,
+            "date": "2026-03-08T23:35:42Z"
         }
     ]
 }

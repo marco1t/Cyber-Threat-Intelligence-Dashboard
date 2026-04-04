@@ -35,11 +35,11 @@ jobs:
           git config --global user.name "marco1t"
           git config --global user.email "105946881+marco1t@users.noreply.github.com"
           
-          git add docs/data/ README.md
+          git add docs/data README.md
           
-          # Si mon script a généré de nouveaux fichiers, je les inclus dans mon tableau de bord
-          if git diff-index --quiet HEAD; then
-            echo "Aucune nouvelle donnée majeure, je ne pollue pas mon historique Git."
+          # Le snapshot quotidien doit créer un diff si la collecte s'est bien déroulée.
+          if git diff --cached --quiet --exit-code; then
+            echo "Aucune différence détectée après la collecte."
           else
             DATE=$(date +"%d/%m/%Y")
             git commit -m "Mise à jour(veille) : nouvelles données du $DATE"
