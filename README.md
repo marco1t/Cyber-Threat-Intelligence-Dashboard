@@ -7,9 +7,9 @@ L'objectif de ce projet est de consolider ma veille technologique en cybersécur
 ## Suivi des Alertes
 
 <!-- STATS_START -->
-**Dernière mise à jour :** 04/04/2026 à 22:23 UTC  
+**Dernière mise à jour :** 05/04/2026 à 07:09 UTC  
 **Total d'alertes collectées :** 40  
-**Alertes Critiques/Hautes :** 3  
+**Alertes Critiques/Hautes :** 6  
 <!-- STATS_END -->
 
 ## ⚙️ Architecture & Stack Technologique
