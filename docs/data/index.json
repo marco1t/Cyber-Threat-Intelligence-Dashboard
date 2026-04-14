@@ -76,5 +76,11 @@
         "file": "2026-04-13.json",
         "total_cves": 35,
         "critical_cves": 0
+    },
+    {
+        "date": "2026-04-14",
+        "file": "2026-04-14.json",
+        "total_cves": 40,
+        "critical_cves": 4
     }
 ]
