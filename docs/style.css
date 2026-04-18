@@ -499,7 +499,7 @@ body {
 /* ─── ALERTS GRID ────────────────────────────────── */
 
 .alerts-section {
-    /* grouping */
+    margin-bottom: 2rem;
 }
 
 .alerts-grid {
@@ -579,6 +579,36 @@ body {
     line-height: 1.45;
     color: var(--text-1);
     flex: 1;
+}
+
+.alert-summary {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--text-2);
+}
+
+.alert-reason {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: #93c5fd;
+}
+
+.alert-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+.alert-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: var(--text-2);
+    font-size: 0.68rem;
+    font-weight: 600;
 }
 
 .match-badge {

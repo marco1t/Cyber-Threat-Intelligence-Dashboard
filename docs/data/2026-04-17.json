@@ -1,405 +1,404 @@
 {
-    "last_updated": "2026-04-17T07:50:15Z",
+    "last_updated": "2026-04-17T23:27:57Z",
     "alerts": [
         {
-            "id": "https://www.securityweek.com/cursor-ai-vulnerability-exposed-developer-devices/",
-            "title": "Cursor AI Vulnerability Exposed Developer Devices",
-            "source": "SecurityWeek",
-            "type": "Article RSS",
+            "id": "https://www.microsoft.com/en-us/security/blog/2026/04/16/dissecting-sapphire-sleets-macos-intrusion-from-lure-to-compromise/",
+            "title": "Dissecting Sapphire Sleet’s macOS intrusion from lure to compromise",
+            "summary": "The Microsoft Defender Security Research Team uncovered a sophisticated macOS intrusion campaign attributed to the North Korean threat actor Sapphire Sleet that abuses user driven…",
+            "source": "Microsoft Security Blog",
+            "type": "Officiel",
             "severity": "Info",
-            "link": "https://www.securityweek.com/cursor-ai-vulnerability-exposed-developer-devices/",
-            "match": false,
-            "date": "2026-04-17T07:29:16Z"
-        },
-        {
-            "id": "https://thehackernews.com/2026/04/nist-limits-cve-enrichment-after-263.html",
-            "title": "NIST Limits CVE Enrichment After 263% Surge in Vulnerability Submissions",
-            "source": "TheHackerNews",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://thehackernews.com/2026/04/nist-limits-cve-enrichment-after-263.html",
-            "match": false,
-            "date": "2026-04-17T07:14:00Z"
-        },
-        {
-            "id": "https://www.bleepingcomputer.com/news/security/man-gets-30-months-for-selling-thousands-of-hacked-draftkings-accounts/",
-            "title": "Man gets 30 months for selling thousands of hacked DraftKings accounts",
-            "source": "BleepingComputer",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://www.bleepingcomputer.com/news/security/man-gets-30-months-for-selling-thousands-of-hacked-draftkings-accounts/",
-            "match": false,
-            "date": "2026-04-17T07:10:32Z"
-        },
-        {
-            "id": "https://www.securityweek.com/53-ddos-domains-taken-down-by-law-enforcement/",
-            "title": "53 DDoS Domains Taken Down by Law Enforcement",
-            "source": "SecurityWeek",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://www.securityweek.com/53-ddos-domains-taken-down-by-law-enforcement/",
-            "match": false,
-            "date": "2026-04-17T06:40:21Z"
+            "link": "https://www.microsoft.com/en-us/security/blog/2026/04/16/dissecting-sapphire-sleets-macos-intrusion-from-lure-to-compromise/",
+            "match": true,
+            "date": "2026-04-16T15:00:00Z",
+            "stream": "cyber",
+            "score": 23.5,
+            "reason": "source officielle | campaign, threat actor",
+            "tags": [
+                "campaign",
+                "threat actor",
+                "intrusion",
+                "compromise"
+            ]
         },
         {
             "id": "https://www.bleepingcomputer.com/news/security/recently-leaked-windows-zero-days-now-exploited-in-attacks/",
             "title": "Recently leaked Windows zero-days now exploited in attacks",
+            "summary": "Threat actors are exploiting three recently disclosed Windows security vulnerabilities in attacks aimed at gaining SYSTEM or elevated administrator permissions. [...]",
             "source": "BleepingComputer",
-            "type": "Article RSS",
+            "type": "Veille",
             "severity": "Info",
             "link": "https://www.bleepingcomputer.com/news/security/recently-leaked-windows-zero-days-now-exploited-in-attacks/",
             "match": true,
-            "date": "2026-04-17T06:14:52Z"
+            "date": "2026-04-17T06:14:52Z",
+            "stream": "cyber",
+            "score": 18.7,
+            "reason": "threat actor, exploit | Windows",
+            "tags": [
+                "Windows",
+                "threat actor",
+                "exploit",
+                "zero-day"
+            ]
         },
         {
-            "id": "https://thehackernews.com/2026/04/operation-poweroff-seizes-53-ddos.html",
-            "title": "Operation PowerOFF Seizes 53 DDoS Domains, Exposes 3 Million Criminal Accounts",
-            "source": "TheHackerNews",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://thehackernews.com/2026/04/operation-poweroff-seizes-53-ddos.html",
-            "match": false,
-            "date": "2026-04-17T05:46:00Z"
-        },
-        {
-            "id": "https://thehackernews.com/2026/04/apache-activemq-cve-2026-34197-added-to.html",
-            "title": "Apache ActiveMQ CVE-2026-34197 Added to CISA KEV Amid Active Exploitation",
-            "source": "TheHackerNews",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://thehackernews.com/2026/04/apache-activemq-cve-2026-34197-added-to.html",
-            "match": false,
-            "date": "2026-04-17T03:22:00Z"
-        },
-        {
-            "id": "https://www.bleepingcomputer.com/news/security/operation-poweroff-identifies-75k-ddos-users-takes-down-53-domains/",
-            "title": "Operation PowerOFF identifies 75k DDoS users, takes down 53 domains",
+            "id": "https://www.bleepingcomputer.com/news/security/payouts-king-ransomware-uses-qemu-vms-to-bypass-endpoint-security/",
+            "title": "Payouts King ransomware uses QEMU VMs to bypass endpoint security",
+            "summary": "The Payouts King ransomware is using the QEMU emulator as a reverse SSH backdoor to run hidden virtual machines on compromised systems and bypass endpoint security. [...]",
             "source": "BleepingComputer",
-            "type": "Article RSS",
+            "type": "Veille",
             "severity": "Info",
-            "link": "https://www.bleepingcomputer.com/news/security/operation-poweroff-identifies-75k-ddos-users-takes-down-53-domains/",
-            "match": false,
-            "date": "2026-04-16T22:26:34Z"
-        },
-        {
-            "id": "https://www.bleepingcomputer.com/news/security/zionsiphon-malware-designed-to-sabotage-water-treatment-systems/",
-            "title": "ZionSiphon malware designed to sabotage water treatment systems",
-            "source": "BleepingComputer",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://www.bleepingcomputer.com/news/security/zionsiphon-malware-designed-to-sabotage-water-treatment-systems/",
-            "match": false,
-            "date": "2026-04-16T22:04:53Z"
-        },
-        {
-            "id": "https://www.bleepingcomputer.com/news/microsoft/new-microsoft-defender-redsun-zero-day-poc-grants-system-privileges/",
-            "title": "New Microsoft Defender “RedSun” zero-day PoC grants SYSTEM privileges",
-            "source": "BleepingComputer",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://www.bleepingcomputer.com/news/microsoft/new-microsoft-defender-redsun-zero-day-poc-grants-system-privileges/",
-            "match": false,
-            "date": "2026-04-16T20:19:31Z"
-        },
-        {
-            "id": "https://www.darkreading.com/application-security/north-korea-clickfix-target-macos-users-data",
-            "title": "North Korea Uses ClickFix to Target macOS Users' Data",
-            "source": "Dark Reading",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://www.darkreading.com/application-security/north-korea-clickfix-target-macos-users-data",
-            "match": false,
-            "date": "2026-04-16T19:42:45Z"
-        },
-        {
-            "id": "https://www.darkreading.com/cyberattacks-data-breaches/harmless-global-adware-av-killer",
-            "title": "'Harmless' Global Adware Transforms Into an AV Killer",
-            "source": "Dark Reading",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://www.darkreading.com/cyberattacks-data-breaches/harmless-global-adware-av-killer",
+            "link": "https://www.bleepingcomputer.com/news/security/payouts-king-ransomware-uses-qemu-vms-to-bypass-endpoint-security/",
             "match": true,
-            "date": "2026-04-16T19:07:26Z"
+            "date": "2026-04-17T19:10:19Z",
+            "stream": "cyber",
+            "score": 15.5,
+            "reason": "ransomware, compromise",
+            "tags": [
+                "ransomware",
+                "compromise",
+                "backdoor"
+            ]
         },
         {
-            "id": "https://blog.talosintelligence.com/foxit-libraw-vulnerabilities/",
-            "title": "Foxit, LibRaw vulnerabilities",
-            "source": "Cisco Talos",
-            "type": "Article RSS",
+            "id": "https://www.microsoft.com/en-us/security/blog/2026/04/07/soho-router-compromise-leads-to-dns-hijacking-and-adversary-in-the-middle-attacks/",
+            "title": "SOHO router compromise leads to DNS hijacking and adversary-in-the-middle attacks",
+            "summary": "Executive summary Forest Blizzard, a threat actor linked to the Russian military, has been compromising insecure home and small-office internet equipment like routers, then modify…",
+            "source": "Microsoft Security Blog",
+            "type": "Officiel",
             "severity": "Info",
-            "link": "https://blog.talosintelligence.com/foxit-libraw-vulnerabilities/",
+            "link": "https://www.microsoft.com/en-us/security/blog/2026/04/07/soho-router-compromise-leads-to-dns-hijacking-and-adversary-in-the-middle-attacks/",
             "match": true,
-            "date": "2026-04-16T19:00:24Z"
+            "date": "2026-04-07T14:00:00Z",
+            "stream": "cyber",
+            "score": 14.5,
+            "reason": "source officielle | threat actor, compromise",
+            "tags": [
+                "threat actor",
+                "compromise"
+            ]
         },
         {
-            "id": "https://blog.talosintelligence.com/the-q1-vulnerability-pulse/",
-            "title": "The Q1 vulnerability pulse",
-            "source": "Cisco Talos",
-            "type": "Article RSS",
+            "id": "https://aws.amazon.com/blogs/security/a-framework-for-securely-collecting-forensic-artifacts-into-s3-buckets/",
+            "title": "A framework for securely collecting forensic artifacts into S3 buckets",
+            "summary": "When customers experience a security incident, they need to acquire forensic artifacts to identify root cause, extract indicators of compromise (IoCs), and validate remediation ef…",
+            "source": "AWS Security Blog",
+            "type": "Officiel",
             "severity": "Info",
-            "link": "https://blog.talosintelligence.com/the-q1-vulnerability-pulse/",
-            "match": false,
-            "date": "2026-04-16T18:00:31Z"
-        },
-        {
-            "id": "https://thehackernews.com/2026/04/newly-discovered-powmix-botnet-hits.html",
-            "title": "Newly Discovered PowMix Botnet Hits Czech Workers Using Randomized C2 Traffic",
-            "source": "TheHackerNews",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://thehackernews.com/2026/04/newly-discovered-powmix-botnet-hits.html",
+            "link": "https://aws.amazon.com/blogs/security/a-framework-for-securely-collecting-forensic-artifacts-into-s3-buckets/",
             "match": true,
-            "date": "2026-04-16T17:52:00Z"
+            "date": "2026-04-08T18:19:00Z",
+            "stream": "cyber",
+            "score": 14.5,
+            "reason": "source officielle | incident, compromise",
+            "tags": [
+                "incident",
+                "compromise"
+            ]
         },
         {
-            "id": "https://www.securityweek.com/government-cant-win-the-cyber-war-without-the-private-sector/",
-            "title": "Government Can’t Win the Cyber War Without the Private Sector",
-            "source": "SecurityWeek",
-            "type": "Article RSS",
+            "id": "https://openai.com/index/launching-sora-responsibly/",
+            "title": "Launching Sora Responsibly",
+            "summary": "Mise à jour officielle détectée sur le site OpenAI.",
+            "source": "OpenAI Updates",
+            "type": "Officiel",
             "severity": "Info",
-            "link": "https://www.securityweek.com/government-cant-win-the-cyber-war-without-the-private-sector/",
-            "match": false,
-            "date": "2026-04-16T17:00:00Z"
-        },
-        {
-            "id": "https://www.darkreading.com/endpoint-security/two-factor-authentication-breaks-free-from-the-desktop",
-            "title": "Two-Factor Authentication Breaks Free from the Desktop",
-            "source": "Dark Reading",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://www.darkreading.com/endpoint-security/two-factor-authentication-breaks-free-from-the-desktop",
-            "match": false,
-            "date": "2026-04-16T15:28:15Z"
-        },
-        {
-            "id": "https://www.darkreading.com/endpoint-security/microsoftoriginal-windows-secure-boot-certificates-expire",
-            "title": "Microsoft's Original Windows Secure Boot Certificate Is Expiring",
-            "source": "Dark Reading",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://www.darkreading.com/endpoint-security/microsoftoriginal-windows-secure-boot-certificates-expire",
+            "link": "https://openai.com/index/launching-sora-responsibly/",
             "match": true,
-            "date": "2026-04-16T15:16:30Z"
+            "date": "2026-04-06T21:14:16Z",
+            "stream": "ai",
+            "score": 17.9,
+            "reason": "source officielle | OpenAI | OpenAI, launch",
+            "tags": [
+                "OpenAI",
+                "launch"
+            ]
         },
         {
-            "id": "https://www.securityweek.com/openai-widens-access-to-cybersecurity-model-after-anthropics-mythos-reveal/",
-            "title": "OpenAI Widens Access to Cybersecurity Model After Anthropic’s Mythos Reveal",
-            "source": "SecurityWeek",
-            "type": "Article RSS",
+            "id": "https://status.claude.com/incidents/f00h6l76tsjs",
+            "title": "Elevated errors on Claude.ai, API, Claude Code",
+            "summary": "Apr 15 , 17:42 UTC Resolved - This incident has been resolved. Apr 15 , 16:29 UTC Update - We have seen success rates for login to Claude.ai, including via Claude Code, stabilize…",
+            "source": "Claude Status",
+            "type": "Officiel",
             "severity": "Info",
-            "link": "https://www.securityweek.com/openai-widens-access-to-cybersecurity-model-after-anthropics-mythos-reveal/",
-            "match": false,
-            "date": "2026-04-16T14:27:06Z"
-        },
-        {
-            "id": "https://thehackernews.com/2026/04/threatsday-bulletin-17-year-old-excel.html",
-            "title": "ThreatsDay Bulletin: Defender 0-Day, SonicWall Brute-Force, 17-Year-Old Excel RCE and 15 More Stories",
-            "source": "TheHackerNews",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://thehackernews.com/2026/04/threatsday-bulletin-17-year-old-excel.html",
-            "match": false,
-            "date": "2026-04-16T13:05:00Z"
-        },
-        {
-            "id": "https://www.securityweek.com/data-breach-at-tennessee-hospital-affects-337000/",
-            "title": "Data Breach at Tennessee Hospital Affects 337,000",
-            "source": "SecurityWeek",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://www.securityweek.com/data-breach-at-tennessee-hospital-affects-337000/",
-            "match": false,
-            "date": "2026-04-16T12:40:36Z"
-        },
-        {
-            "id": "https://blog.talosintelligence.com/powmix-botnet-targets-czech-workforce/",
-            "title": "PowMix botnet targets Czech workforce",
-            "source": "Cisco Talos",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://blog.talosintelligence.com/powmix-botnet-targets-czech-workforce/",
+            "link": "https://status.claude.com/incidents/f00h6l76tsjs",
             "match": true,
-            "date": "2026-04-16T10:00:33Z"
+            "date": "2026-04-15T17:42:57Z",
+            "stream": "ai",
+            "score": 25.6,
+            "reason": "source officielle | Anthropic | Claude, Claude Code",
+            "tags": [
+                "Anthropic",
+                "Claude",
+                "Claude Code",
+                "API",
+                "incident"
+            ]
         },
         {
-            "id": "https://blog.talosintelligence.com/more-than-pretty-pictures-wendy-bishop-on-visual-storytelling-in-tech/",
-            "title": "More than pretty pictures: Wendy Bishop on visual storytelling in tech",
-            "source": "Cisco Talos",
-            "type": "Article RSS",
+            "id": "https://status.claude.com/incidents/qj05p69fff9h",
+            "title": "Claude Cowork not starting for some users",
+            "summary": "Apr 16 , 21:29 UTC Resolved - This incident has been resolved in the v1.3109.0 release of Claude Desktop. Please \"Check for Updates\". Apr 16 , 20:47 UTC Identified - The issue has…",
+            "source": "Claude Status",
+            "type": "Officiel",
             "severity": "Info",
-            "link": "https://blog.talosintelligence.com/more-than-pretty-pictures-wendy-bishop-on-visual-storytelling-in-tech/",
-            "match": false,
-            "date": "2026-04-16T10:00:28Z"
-        },
-        {
-            "id": "https://www.darkreading.com/cyberattacks-data-breaches/6-year-ransomware-campaign-turkish-homes-smbs",
-            "title": "6-Year Ransomware Campaign Targets Turkish Homes &amp; SMBs",
-            "source": "Dark Reading",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://www.darkreading.com/cyberattacks-data-breaches/6-year-ransomware-campaign-turkish-homes-smbs",
-            "match": false,
-            "date": "2026-04-16T06:00:00Z"
-        },
-        {
-            "id": "https://blog.talosintelligence.com/the-n8n-n8mare/",
-            "title": "The n8n n8mare: How threat actors are misusing AI workflow automation",
-            "source": "Cisco Talos",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://blog.talosintelligence.com/the-n8n-n8mare/",
+            "link": "https://status.claude.com/incidents/qj05p69fff9h",
             "match": true,
-            "date": "2026-04-15T10:00:52Z"
+            "date": "2026-04-16T21:29:01Z",
+            "stream": "ai",
+            "score": 23.8,
+            "reason": "source officielle | Anthropic | Claude, incident",
+            "tags": [
+                "Anthropic",
+                "Claude",
+                "incident",
+                "release"
+            ]
         },
         {
-            "id": "https://krebsonsecurity.com/2026/04/patch-tuesday-april-2026-edition/",
-            "title": "Patch Tuesday, April 2026 Edition",
-            "source": "KrebsOnSecurity",
-            "type": "Article RSS",
+            "id": "https://www.anthropic.com/news/claude-opus-4-7",
+            "title": "Introducing Claude Opus 4.7",
+            "summary": "Our latest Opus model brings stronger performance across coding, agents, vision, and multi-step tasks, with greater thoroughness and consistency on the work that matters most.",
+            "source": "Anthropic News",
+            "type": "Officiel",
             "severity": "Info",
-            "link": "https://krebsonsecurity.com/2026/04/patch-tuesday-april-2026-edition/",
+            "link": "https://www.anthropic.com/news/claude-opus-4-7",
             "match": true,
-            "date": "2026-04-14T21:47:59Z"
+            "date": "2026-04-17T23:27:57Z",
+            "stream": "ai",
+            "score": 22.5,
+            "reason": "source officielle | Anthropic | Claude, model",
+            "tags": [
+                "Anthropic",
+                "Claude",
+                "model",
+                "agent"
+            ]
         },
         {
-            "id": "CVE-2026-33456",
-            "title": "Vulnérabilité CVE-2026-33456",
-            "source": "NIST NVD",
-            "type": "CVE",
-            "severity": "MEDIUM",
-            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-33456",
-            "match": false,
-            "date": "2026-04-10T09:16:24Z"
-        },
-        {
-            "id": "CVE-2026-33455",
-            "title": "Vulnérabilité CVE-2026-33455",
-            "source": "NIST NVD",
-            "type": "CVE",
-            "severity": "MEDIUM",
-            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-33455",
-            "match": false,
-            "date": "2026-04-10T09:16:23Z"
-        },
-        {
-            "id": "CVE-2026-6035",
-            "title": "Vulnérabilité CVE-2026-6035",
-            "source": "NIST NVD",
-            "type": "CVE",
-            "severity": "MEDIUM",
-            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-6035",
-            "match": false,
-            "date": "2026-04-10T08:16:27Z"
-        },
-        {
-            "id": "CVE-2026-5525",
-            "title": "Vulnérabilité CVE-2026-5525",
-            "source": "NIST NVD",
-            "type": "CVE",
-            "severity": "MEDIUM",
-            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-5525",
-            "match": false,
-            "date": "2026-04-10T08:16:26Z"
-        },
-        {
-            "id": "CVE-2026-6031",
-            "title": "Vulnérabilité CVE-2026-6031",
-            "source": "NIST NVD",
-            "type": "CVE",
-            "severity": "MEDIUM",
-            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-6031",
-            "match": false,
-            "date": "2026-04-10T08:16:26Z"
-        },
-        {
-            "id": "CVE-2026-6032",
-            "title": "Vulnérabilité CVE-2026-6032",
-            "source": "NIST NVD",
-            "type": "CVE",
-            "severity": "MEDIUM",
-            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-6032",
-            "match": false,
-            "date": "2026-04-10T08:16:26Z"
-        },
-        {
-            "id": "CVE-2026-6033",
-            "title": "Vulnérabilité CVE-2026-6033",
-            "source": "NIST NVD",
-            "type": "CVE",
-            "severity": "MEDIUM",
-            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-6033",
-            "match": false,
-            "date": "2026-04-10T08:16:26Z"
-        },
-        {
-            "id": "CVE-2026-6034",
-            "title": "Vulnérabilité CVE-2026-6034",
-            "source": "NIST NVD",
-            "type": "CVE",
-            "severity": "MEDIUM",
-            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-6034",
-            "match": false,
-            "date": "2026-04-10T08:16:26Z"
-        },
-        {
-            "id": "CVE-2026-40212",
-            "title": "Vulnérabilité CVE-2026-40212",
-            "source": "NIST NVD",
-            "type": "CVE",
-            "severity": "MEDIUM",
-            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-40212",
-            "match": false,
-            "date": "2026-04-10T08:16:25Z"
-        },
-        {
-            "id": "CVE-2026-22750",
-            "title": "Vulnérabilité CVE-2026-22750",
-            "source": "NIST NVD",
-            "type": "CVE",
-            "severity": "HIGH",
-            "link": "https://nvd.nist.gov/vuln/detail/CVE-2026-22750",
-            "match": false,
-            "date": "2026-04-10T08:16:24Z"
-        },
-        {
-            "id": "https://krebsonsecurity.com/2026/04/russia-hacked-routers-to-steal-microsoft-office-tokens/",
-            "title": "Russia Hacked Routers to Steal Microsoft Office Tokens",
-            "source": "KrebsOnSecurity",
-            "type": "Article RSS",
+            "id": "https://www.anthropic.com/news/claude-design-anthropic-labs",
+            "title": "Introducing Claude Design by Anthropic Labs",
+            "summary": "Today, we’re launching Claude Design, a new Anthropic Labs product that lets you collaborate with Claude to create polished visual work like designs, prototypes, slides, one-pager…",
+            "source": "Anthropic News",
+            "type": "Officiel",
             "severity": "Info",
-            "link": "https://krebsonsecurity.com/2026/04/russia-hacked-routers-to-steal-microsoft-office-tokens/",
+            "link": "https://www.anthropic.com/news/claude-design-anthropic-labs",
             "match": true,
-            "date": "2026-04-07T17:02:44Z"
-        },
-        {
-            "id": "https://krebsonsecurity.com/2026/04/germany-doxes-unkn-head-of-ru-ransomware-gangs-revil-gandcrab/",
-            "title": "Germany Doxes “UNKN,” Head of RU Ransomware Gangs REvil, GandCrab",
-            "source": "KrebsOnSecurity",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://krebsonsecurity.com/2026/04/germany-doxes-unkn-head-of-ru-ransomware-gangs-revil-gandcrab/",
-            "match": false,
-            "date": "2026-04-06T02:07:17Z"
-        },
-        {
-            "id": "https://krebsonsecurity.com/2026/03/canisterworm-springs-wiper-attack-targeting-iran/",
-            "title": "‘CanisterWorm’ Springs Wiper Attack Targeting Iran",
-            "source": "KrebsOnSecurity",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://krebsonsecurity.com/2026/03/canisterworm-springs-wiper-attack-targeting-iran/",
-            "match": false,
-            "date": "2026-03-23T15:43:04Z"
-        },
-        {
-            "id": "https://krebsonsecurity.com/2026/03/feds-disrupt-iot-botnets-behind-huge-ddos-attacks/",
-            "title": "Feds Disrupt IoT Botnets Behind Huge DDoS Attacks",
-            "source": "KrebsOnSecurity",
-            "type": "Article RSS",
-            "severity": "Info",
-            "link": "https://krebsonsecurity.com/2026/03/feds-disrupt-iot-botnets-behind-huge-ddos-attacks/",
-            "match": false,
-            "date": "2026-03-20T00:49:19Z"
+            "date": "2026-04-17T23:27:57Z",
+            "stream": "ai",
+            "score": 20.7,
+            "reason": "source officielle | Anthropic | Claude, Anthropic",
+            "tags": [
+                "Anthropic",
+                "Claude",
+                "launch"
+            ]
         }
-    ]
+    ],
+    "streams": {
+        "cyber": [
+            {
+                "id": "https://www.microsoft.com/en-us/security/blog/2026/04/16/dissecting-sapphire-sleets-macos-intrusion-from-lure-to-compromise/",
+                "title": "Dissecting Sapphire Sleet’s macOS intrusion from lure to compromise",
+                "summary": "The Microsoft Defender Security Research Team uncovered a sophisticated macOS intrusion campaign attributed to the North Korean threat actor Sapphire Sleet that abuses user driven…",
+                "source": "Microsoft Security Blog",
+                "type": "Officiel",
+                "severity": "Info",
+                "link": "https://www.microsoft.com/en-us/security/blog/2026/04/16/dissecting-sapphire-sleets-macos-intrusion-from-lure-to-compromise/",
+                "match": true,
+                "date": "2026-04-16T15:00:00Z",
+                "stream": "cyber",
+                "score": 23.5,
+                "reason": "source officielle | campaign, threat actor",
+                "tags": [
+                    "campaign",
+                    "threat actor",
+                    "intrusion",
+                    "compromise"
+                ]
+            },
+            {
+                "id": "https://www.bleepingcomputer.com/news/security/recently-leaked-windows-zero-days-now-exploited-in-attacks/",
+                "title": "Recently leaked Windows zero-days now exploited in attacks",
+                "summary": "Threat actors are exploiting three recently disclosed Windows security vulnerabilities in attacks aimed at gaining SYSTEM or elevated administrator permissions. [...]",
+                "source": "BleepingComputer",
+                "type": "Veille",
+                "severity": "Info",
+                "link": "https://www.bleepingcomputer.com/news/security/recently-leaked-windows-zero-days-now-exploited-in-attacks/",
+                "match": true,
+                "date": "2026-04-17T06:14:52Z",
+                "stream": "cyber",
+                "score": 18.7,
+                "reason": "threat actor, exploit | Windows",
+                "tags": [
+                    "Windows",
+                    "threat actor",
+                    "exploit",
+                    "zero-day"
+                ]
+            },
+            {
+                "id": "https://www.bleepingcomputer.com/news/security/payouts-king-ransomware-uses-qemu-vms-to-bypass-endpoint-security/",
+                "title": "Payouts King ransomware uses QEMU VMs to bypass endpoint security",
+                "summary": "The Payouts King ransomware is using the QEMU emulator as a reverse SSH backdoor to run hidden virtual machines on compromised systems and bypass endpoint security. [...]",
+                "source": "BleepingComputer",
+                "type": "Veille",
+                "severity": "Info",
+                "link": "https://www.bleepingcomputer.com/news/security/payouts-king-ransomware-uses-qemu-vms-to-bypass-endpoint-security/",
+                "match": true,
+                "date": "2026-04-17T19:10:19Z",
+                "stream": "cyber",
+                "score": 15.5,
+                "reason": "ransomware, compromise",
+                "tags": [
+                    "ransomware",
+                    "compromise",
+                    "backdoor"
+                ]
+            },
+            {
+                "id": "https://www.microsoft.com/en-us/security/blog/2026/04/07/soho-router-compromise-leads-to-dns-hijacking-and-adversary-in-the-middle-attacks/",
+                "title": "SOHO router compromise leads to DNS hijacking and adversary-in-the-middle attacks",
+                "summary": "Executive summary Forest Blizzard, a threat actor linked to the Russian military, has been compromising insecure home and small-office internet equipment like routers, then modify…",
+                "source": "Microsoft Security Blog",
+                "type": "Officiel",
+                "severity": "Info",
+                "link": "https://www.microsoft.com/en-us/security/blog/2026/04/07/soho-router-compromise-leads-to-dns-hijacking-and-adversary-in-the-middle-attacks/",
+                "match": true,
+                "date": "2026-04-07T14:00:00Z",
+                "stream": "cyber",
+                "score": 14.5,
+                "reason": "source officielle | threat actor, compromise",
+                "tags": [
+                    "threat actor",
+                    "compromise"
+                ]
+            },
+            {
+                "id": "https://aws.amazon.com/blogs/security/a-framework-for-securely-collecting-forensic-artifacts-into-s3-buckets/",
+                "title": "A framework for securely collecting forensic artifacts into S3 buckets",
+                "summary": "When customers experience a security incident, they need to acquire forensic artifacts to identify root cause, extract indicators of compromise (IoCs), and validate remediation ef…",
+                "source": "AWS Security Blog",
+                "type": "Officiel",
+                "severity": "Info",
+                "link": "https://aws.amazon.com/blogs/security/a-framework-for-securely-collecting-forensic-artifacts-into-s3-buckets/",
+                "match": true,
+                "date": "2026-04-08T18:19:00Z",
+                "stream": "cyber",
+                "score": 14.5,
+                "reason": "source officielle | incident, compromise",
+                "tags": [
+                    "incident",
+                    "compromise"
+                ]
+            }
+        ],
+        "ai": [
+            {
+                "id": "https://openai.com/index/launching-sora-responsibly/",
+                "title": "Launching Sora Responsibly",
+                "summary": "Mise à jour officielle détectée sur le site OpenAI.",
+                "source": "OpenAI Updates",
+                "type": "Officiel",
+                "severity": "Info",
+                "link": "https://openai.com/index/launching-sora-responsibly/",
+                "match": true,
+                "date": "2026-04-06T21:14:16Z",
+                "stream": "ai",
+                "score": 17.9,
+                "reason": "source officielle | OpenAI | OpenAI, launch",
+                "tags": [
+                    "OpenAI",
+                    "launch"
+                ]
+            },
+            {
+                "id": "https://status.claude.com/incidents/f00h6l76tsjs",
+                "title": "Elevated errors on Claude.ai, API, Claude Code",
+                "summary": "Apr 15 , 17:42 UTC Resolved - This incident has been resolved. Apr 15 , 16:29 UTC Update - We have seen success rates for login to Claude.ai, including via Claude Code, stabilize…",
+                "source": "Claude Status",
+                "type": "Officiel",
+                "severity": "Info",
+                "link": "https://status.claude.com/incidents/f00h6l76tsjs",
+                "match": true,
+                "date": "2026-04-15T17:42:57Z",
+                "stream": "ai",
+                "score": 25.6,
+                "reason": "source officielle | Anthropic | Claude, Claude Code",
+                "tags": [
+                    "Anthropic",
+                    "Claude",
+                    "Claude Code",
+                    "API",
+                    "incident"
+                ]
+            },
+            {
+                "id": "https://status.claude.com/incidents/qj05p69fff9h",
+                "title": "Claude Cowork not starting for some users",
+                "summary": "Apr 16 , 21:29 UTC Resolved - This incident has been resolved in the v1.3109.0 release of Claude Desktop. Please \"Check for Updates\". Apr 16 , 20:47 UTC Identified - The issue has…",
+                "source": "Claude Status",
+                "type": "Officiel",
+                "severity": "Info",
+                "link": "https://status.claude.com/incidents/qj05p69fff9h",
+                "match": true,
+                "date": "2026-04-16T21:29:01Z",
+                "stream": "ai",
+                "score": 23.8,
+                "reason": "source officielle | Anthropic | Claude, incident",
+                "tags": [
+                    "Anthropic",
+                    "Claude",
+                    "incident",
+                    "release"
+                ]
+            },
+            {
+                "id": "https://www.anthropic.com/news/claude-opus-4-7",
+                "title": "Introducing Claude Opus 4.7",
+                "summary": "Our latest Opus model brings stronger performance across coding, agents, vision, and multi-step tasks, with greater thoroughness and consistency on the work that matters most.",
+                "source": "Anthropic News",
+                "type": "Officiel",
+                "severity": "Info",
+                "link": "https://www.anthropic.com/news/claude-opus-4-7",
+                "match": true,
+                "date": "2026-04-17T23:27:57Z",
+                "stream": "ai",
+                "score": 22.5,
+                "reason": "source officielle | Anthropic | Claude, model",
+                "tags": [
+                    "Anthropic",
+                    "Claude",
+                    "model",
+                    "agent"
+                ]
+            },
+            {
+                "id": "https://www.anthropic.com/news/claude-design-anthropic-labs",
+                "title": "Introducing Claude Design by Anthropic Labs",
+                "summary": "Today, we’re launching Claude Design, a new Anthropic Labs product that lets you collaborate with Claude to create polished visual work like designs, prototypes, slides, one-pager…",
+                "source": "Anthropic News",
+                "type": "Officiel",
+                "severity": "Info",
+                "link": "https://www.anthropic.com/news/claude-design-anthropic-labs",
+                "match": true,
+                "date": "2026-04-17T23:27:57Z",
+                "stream": "ai",
+                "score": 20.7,
+                "reason": "source officielle | Anthropic | Claude, Anthropic",
+                "tags": [
+                    "Anthropic",
+                    "Claude",
+                    "launch"
+                ]
+            }
+        ]
+    },
+    "summary": {
+        "total_alerts": 10,
+        "cyber_alerts": 5,
+        "ai_alerts": 5,
+        "priority_alerts": 10,
+        "sources_count": 6
+    }
 }

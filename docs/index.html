@@ -78,8 +78,9 @@
         <div class="sidebar-filters" id="sidebar-filters">
             <span class="nav-label">FILTRES</span>
             <button class="filter-btn active" data-filter="all">Tout voir</button>
-            <button class="filter-btn" data-filter="critical">Critiques / Hautes</button>
-            <button class="filter-btn" data-filter="servers">Mes Technologies</button>
+            <button class="filter-btn" data-filter="cyber">Cyber</button>
+            <button class="filter-btn" data-filter="ai">IA</button>
+            <button class="filter-btn" data-filter="stack">Stack perso</button>
         </div>
 
         <div class="sidebar-date" id="sidebar-date">
@@ -103,7 +104,7 @@
             <header class="page-header">
                 <div class="header-left">
                     <h1>Vue d'ensemble</h1>
-                    <p>Veille quotidienne automatisée — périmètre technologique personnel</p>
+                    <p>Cyber prioritaire d'abord, IA ciblée ensuite</p>
                 </div>
                 <div class="header-badge"><span class="mono">v2.0</span></div>
             </header>
@@ -114,7 +115,7 @@
                         <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
                     </div>
                     <div class="kpi-content">
-                        <p class="kpi-label">Total Alertes</p>
+                        <p class="kpi-label">Cyber retenues</p>
                         <p class="kpi-value">0</p>
                     </div>
                     <div class="kpi-glow kpi-glow--blue"></div>
@@ -124,7 +125,7 @@
                         <svg viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
                     <div class="kpi-content">
-                        <p class="kpi-label">Critiques / Hautes</p>
+                        <p class="kpi-label">IA retenues</p>
                         <p class="kpi-value">0</p>
                     </div>
                     <div class="kpi-glow kpi-glow--red"></div>
@@ -134,7 +135,7 @@
                         <svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
                     <div class="kpi-content">
-                        <p class="kpi-label">Alertes MATCH</p>
+                        <p class="kpi-label">Alertes prioritaires</p>
                         <p class="kpi-value">0</p>
                     </div>
                     <div class="kpi-glow kpi-glow--green"></div>
@@ -143,7 +144,7 @@
 
             <section class="chart-section">
                 <div class="section-header">
-                    <h2 class="section-title"><span class="title-bar"></span>Tendance des vulnérabilités</h2>
+                    <h2 class="section-title"><span class="title-bar"></span>Tendance des alertes prioritaires</h2>
                     <span class="mono chart-subtitle">30 derniers jours</span>
                 </div>
                 <div class="chart-container">
@@ -153,10 +154,23 @@
 
             <section class="alerts-section">
                 <div class="section-header">
-                    <h2 class="section-title"><span class="title-bar title-bar--purple"></span>Flux de menaces actives</h2>
-                    <span class="mono" id="alert-count-label">— alertes</span>
+                    <h2 class="section-title"><span class="title-bar"></span>Flux Cyber prioritaire</h2>
+                    <span class="mono" id="cyber-alert-count-label">— alertes</span>
                 </div>
-                <div class="alerts-grid" id="alerts-grid">
+                <div class="alerts-grid" id="cyber-alerts-grid">
+                    <div class="loader">
+                        <div class="loader-spinner"></div>
+                        <span>Analyse en cours...</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="alerts-section">
+                <div class="section-header">
+                    <h2 class="section-title"><span class="title-bar title-bar--purple"></span>Flux IA ciblée</h2>
+                    <span class="mono" id="ai-alert-count-label">— alertes</span>
+                </div>
+                <div class="alerts-grid" id="ai-alerts-grid">
                     <div class="loader">
                         <div class="loader-spinner"></div>
                         <span>Analyse en cours...</span>
@@ -187,13 +201,14 @@
                             <tr>
                                 <th>Date</th>
                                 <th>Total alertes</th>
-                                <th>CVEs critiques</th>
-                                <th>Taux critique</th>
+                                <th>Cyber</th>
+                                <th>IA</th>
+                                <th>Prioritaires</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody id="history-tbody">
-                            <tr><td colspan="5" class="table-loading"><div class="loader-spinner"></div> Chargement...</td></tr>
+                            <tr><td colspan="6" class="table-loading"><div class="loader-spinner"></div> Chargement...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -247,7 +262,7 @@
 
                 <section class="chart-section report-card">
                     <div class="section-header">
-                        <h2 class="section-title"><span class="title-bar title-bar--purple"></span>Distribution par sévérité</h2>
+                        <h2 class="section-title"><span class="title-bar title-bar--purple"></span>Répartition Cyber / IA</h2>
                     </div>
                     <div class="chart-container chart-container--sm">
                         <canvas id="severityChart"></canvas>

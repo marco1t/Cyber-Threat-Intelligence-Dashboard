@@ -2,14 +2,15 @@
 
 Bienvenue sur mon tableau de bord de renseignement sur les cybermenaces.
 
-L'objectif de ce projet est de consolider ma veille technologique en cybersécurité et de documenter mon portfolio. Ce dépôt est mis à jour quotidiennement et de façon 100% automatisée (grâce aux GitHub Actions) en agrégeant plusieurs flux RSS cyber ainsi que les vulnérabilités publiées récemment sur l'API NVD du NIST.
+L'objectif de ce projet est de consolider ma veille technologique en cybersécurité et de documenter mon portfolio. Ce dépôt est mis à jour quotidiennement et de façon 100% automatisée (grâce aux GitHub Actions) en agrégeant une veille cyber prioritaire et une veille IA ciblée sur OpenAI, Anthropic et les outils dev associés.
 
 ## Suivi des Alertes
 
 <!-- STATS_START -->
-**Dernière mise à jour :** 18/04/2026 à 07:11 UTC  
-**Total d'alertes collectées :** 40  
-**Alertes Critiques/Hautes :** 4  
+**Dernière mise à jour :** 17/04/2026 à 23:27 UTC  
+**Alertes Cyber retenues :** 5  
+**Alertes IA retenues :** 5  
+**Alertes prioritaires :** 10  
 <!-- STATS_END -->
 
 ## ⚙️ Architecture & Stack Technologique

@@ -1,36 +1,115 @@
 sources:
-  rss:
+  cyber_rss:
     - url: "https://www.bleepingcomputer.com/feed/"
       name: "BleepingComputer"
-    - url: "https://feeds.feedburner.com/TheHackersNews"
-      name: "TheHackerNews"
+      weight: 4.0
     - url: "https://www.securityweek.com/feed/"
       name: "SecurityWeek"
+      weight: 4.0
     - url: "https://blog.talosintelligence.com/feed/"
       name: "Cisco Talos"
+      weight: 5.0
     - url: "https://krebsonsecurity.com/feed/"
       name: "KrebsOnSecurity"
-    - url: "https://www.darkreading.com/rss.xml"
-      name: "Dark Reading"
+      weight: 4.0
+    - url: "https://www.cisa.gov/news.xml"
+      name: "CISA"
+      weight: 5.0
+    - url: "https://www.microsoft.com/en-us/security/blog/feed/"
+      name: "Microsoft Security Blog"
+      weight: 4.0
+    - url: "https://aws.amazon.com/blogs/security/feed/"
+      name: "AWS Security Blog"
+      weight: 4.0
 
-keywords:
-  - "Cisco"
-  - "Réseau"
-  - "Docker"
-  - "Kubernetes"
-  - "Linux"
-  - "Windows"
-  - "Active Directory"
-  - "Python"
-  - "Django"
-  - "VMware"
-  - "Azure"
-  - "AWS"
+  ai_rss:
+    - url: "https://github.com/anthropics/claude-code/releases.atom"
+      name: "Claude Code Releases"
+      weight: 6.0
+    - url: "https://status.openai.com/history.rss"
+      name: "OpenAI Status"
+      weight: 5.5
+    - url: "https://status.anthropic.com/history.rss"
+      name: "Claude Status"
+      weight: 5.5
+    - url: "https://github.blog/changelog/feed/"
+      name: "GitHub Changelog"
+      weight: 3.5
+    - url: "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"
+      name: "The Verge AI"
+      weight: 2.0
+    - url: "https://techcrunch.com/category/artificial-intelligence/feed/"
+      name: "TechCrunch AI"
+      weight: 2.0
+
+  ai_web:
+    - url: "https://www.anthropic.com/news"
+      name: "Anthropic News"
+      strategy: "anthropic_news"
+      weight: 6.0
+
+  ai_sitemaps:
+    - url: "https://openai.com/sitemap.xml/page/"
+      name: "OpenAI Updates"
+      strategy: "openai_sitemap"
+      weight: 5.0
+
+preferences:
+  companies:
+    - "OpenAI"
+    - "Anthropic"
+  ai_focus_terms:
+    - "ChatGPT"
+    - "Claude"
+    - "Claude Code"
+    - "Codex"
+    - "OpenAI"
+    - "Anthropic"
+    - "model"
+    - "feature"
+    - "API"
+    - "benchmark"
+    - "security"
+    - "incident"
+    - "outage"
+    - "reasoning"
+    - "memory"
+    - "agent"
+    - "release"
+    - "launch"
+    - "pricing"
+  cyber_focus_terms:
+    - "incident"
+    - "breach"
+    - "campaign"
+    - "ransomware"
+    - "malware"
+    - "phishing"
+    - "supply chain"
+    - "threat actor"
+    - "APT"
+    - "exploit"
+    - "zero-day"
+    - "actively exploited"
+    - "intrusion"
+    - "compromise"
+    - "outage"
+    - "cloud"
+    - "identity"
+  dev_stack_terms:
+    - "GitHub"
+    - "Docker"
+    - "AWS"
+    - "Windows"
+    - "Python"
 
 settings:
   force_daily_snapshot: true
-  cve_days_window: 7
-  max_entries_per_rss_source: 5
-  max_nvd_results: 10
+  enable_nvd: false
   request_timeout: 15
-  default_severity_threshold: 0
+  max_entries_per_source: 8
+  max_items_per_stream: 5
+  sitemap_days_window: 45
+  dedupe_similarity_threshold: 0.88
+  cyber_min_score: 7.0
+  ai_min_score: 5.5

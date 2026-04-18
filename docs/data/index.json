@@ -24,87 +24,13 @@
         "critical_cves": 3
     },
     {
-        "date": "2026-04-05",
-        "file": "2026-04-05.json",
-        "total_cves": 40,
-        "critical_cves": 6
-    },
-    {
-        "date": "2026-04-06",
-        "file": "2026-04-06.json",
-        "total_cves": 40,
-        "critical_cves": 6
-    },
-    {
-        "date": "2026-04-07",
-        "file": "2026-04-07.json",
-        "total_cves": 40,
-        "critical_cves": 5
-    },
-    {
-        "date": "2026-04-08",
-        "file": "2026-04-08.json",
-        "total_cves": 40,
-        "critical_cves": 2
-    },
-    {
-        "date": "2026-04-09",
-        "file": "2026-04-09.json",
-        "total_cves": 40,
-        "critical_cves": 3
-    },
-    {
-        "date": "2026-04-10",
-        "file": "2026-04-10.json",
-        "total_cves": 40,
-        "critical_cves": 8
-    },
-    {
-        "date": "2026-04-11",
-        "file": "2026-04-11.json",
-        "total_cves": 40,
-        "critical_cves": 1
-    },
-    {
-        "date": "2026-04-12",
-        "file": "2026-04-12.json",
-        "total_cves": 40,
-        "critical_cves": 2
-    },
-    {
-        "date": "2026-04-13",
-        "file": "2026-04-13.json",
-        "total_cves": 35,
-        "critical_cves": 0
-    },
-    {
-        "date": "2026-04-14",
-        "file": "2026-04-14.json",
-        "total_cves": 40,
-        "critical_cves": 4
-    },
-    {
-        "date": "2026-04-15",
-        "file": "2026-04-15.json",
-        "total_cves": 40,
-        "critical_cves": 3
-    },
-    {
-        "date": "2026-04-16",
-        "file": "2026-04-16.json",
-        "total_cves": 40,
-        "critical_cves": 8
-    },
-    {
         "date": "2026-04-17",
         "file": "2026-04-17.json",
-        "total_cves": 40,
-        "critical_cves": 1
-    },
-    {
-        "date": "2026-04-18",
-        "file": "2026-04-18.json",
-        "total_cves": 40,
-        "critical_cves": 4
+        "total_alerts": 10,
+        "cyber_alerts": 5,
+        "ai_alerts": 5,
+        "priority_alerts": 10,
+        "total_cves": 10,
+        "critical_cves": 10
     }
 ]

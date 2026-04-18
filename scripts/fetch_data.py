@@ -1,16 +1,22 @@
+import html
 import json
 import logging
 import os
 import re
+import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
+from difflib import SequenceMatcher
 from email.utils import parsedate_to_datetime
+from urllib.parse import urljoin, urlparse
 
 import feedparser
 import requests
 import yaml
+from bs4 import BeautifulSoup
 
-# Configuration de mes logs
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+
 
 class ThreatIntelFetcher:
     def __init__(self, config_path="config.yaml", data_path="docs/data/data.json", readme_path="README.md"):
@@ -20,35 +26,92 @@ class ThreatIntelFetcher:
         self.run_started_at = datetime.now(timezone.utc)
         self.config = self._load_config()
         self.settings = self.config.get("settings", {})
+        self.sources = self.config.get("sources", {})
+        self.preferences = self.config.get("preferences", {})
         self.current_data = self._load_current_data()
-        self.force_daily_snapshot = bool(self.settings.get("force_daily_snapshot", False))
-        self.cve_days_window = int(self.settings.get("cve_days_window", 7))
-        self.max_entries_per_rss_source = int(self.settings.get("max_entries_per_rss_source", 5))
-        self.max_nvd_results = int(self.settings.get("max_nvd_results", 10))
+
+        self.force_daily_snapshot = bool(self.settings.get("force_daily_snapshot", True))
+        self.enable_nvd = bool(self.settings.get("enable_nvd", False))
         self.request_timeout = int(self.settings.get("request_timeout", 15))
+        self.max_entries_per_source = int(self.settings.get("max_entries_per_source", 8))
+        self.max_items_per_stream = int(self.settings.get("max_items_per_stream", 5))
+        self.sitemap_days_window = int(self.settings.get("sitemap_days_window", 45))
+        self.dedupe_similarity_threshold = float(self.settings.get("dedupe_similarity_threshold", 0.88))
+        self.cyber_min_score = float(self.settings.get("cyber_min_score", 7.0))
+        self.ai_min_score = float(self.settings.get("ai_min_score", 7.0))
+
         self.source_attempts = 0
         self.successful_sources = []
         self.failed_sources = []
-        self.new_data = {"last_updated": self._format_iso(self.run_started_at), "alerts": []}
+
+        self.new_data = {
+            "last_updated": self._format_iso(self.run_started_at),
+            "alerts": [],
+            "streams": {"cyber": [], "ai": []},
+            "summary": {},
+        }
+
+        self.session = requests.Session()
+        self.session.headers.update({"User-Agent": "ThreatIntelDashboard/3.0"})
+
+        self.ai_company_aliases = {
+            "OpenAI": ["openai", "chatgpt", "codex", "gpt", "sora", "responses api", "operator"],
+            "Anthropic": ["anthropic", "claude", "claude code", "opus", "sonnet", "haiku", "claude.ai"],
+        }
+        self.ai_focus_aliases = [
+            "model",
+            "models",
+            "feature",
+            "features",
+            "release",
+            "launch",
+            "benchmark",
+            "security",
+            "incident",
+            "outage",
+            "reasoning",
+            "memory",
+            "agent",
+            "api",
+            "pricing",
+            "update",
+            "copilot",
+        ]
+        self.cyber_priority_aliases = [
+            "incident",
+            "breach",
+            "campaign",
+            "ransomware",
+            "malware",
+            "phishing",
+            "supply chain",
+            "threat actor",
+            "apt",
+            "exploit",
+            "zero-day",
+            "actively exploited",
+            "compromise",
+            "intrusion",
+            "outage",
+            "backdoor",
+        ]
 
     def _load_config(self):
-        # Je charge ma configuration YAML
         try:
-            with open(self.config_path, 'r', encoding='utf-8') as f:
-                return yaml.safe_load(f)
-        except Exception as e:
-            logging.error(f"Je n'ai pas pu charger ma configuration : {e}")
+            with open(self.config_path, "r", encoding="utf-8") as file_obj:
+                return yaml.safe_load(file_obj) or {}
+        except Exception as exc:
+            logging.error(f"Je n'ai pas pu charger la configuration : {exc}")
             return {}
 
     def _load_current_data(self):
-        # Je lis mes données locales existantes pour pouvoir comparer ensuite
         if os.path.exists(self.data_path):
             try:
-                with open(self.data_path, 'r', encoding='utf-8') as f:
-                    return json.load(f)
-            except Exception as e:
-                logging.error(f"Erreur lors de la lecture de mon fichier de données local : {e}")
-        return {"alerts": []}
+                with open(self.data_path, "r", encoding="utf-8") as file_obj:
+                    return json.load(file_obj)
+            except Exception as exc:
+                logging.error(f"Erreur pendant la lecture des données courantes : {exc}")
+        return {"alerts": [], "streams": {"cyber": [], "ai": []}}
 
     def _format_iso(self, dt):
         if dt is None:
@@ -83,6 +146,159 @@ class ThreatIntelFetcher:
             parsed = self.run_started_at
         return self._format_iso(parsed)
 
+    def _clean_text(self, text):
+        if not text:
+            return ""
+        cleaned = re.sub(r"<[^>]+>", " ", str(text))
+        cleaned = html.unescape(cleaned)
+        return re.sub(r"\s+", " ", cleaned).strip()
+
+    def _shorten(self, text, limit=180):
+        cleaned = self._clean_text(text)
+        if len(cleaned) <= limit:
+            return cleaned
+        return cleaned[: limit - 1].rstrip() + "…"
+
+    def _slug_to_title(self, slug):
+        raw = slug.replace("-", " ").replace("_", " ").strip()
+        title = re.sub(r"\s+", " ", raw).title()
+        replacements = {
+            "Gpt": "GPT",
+            "Api": "API",
+            "Ai": "AI",
+            "Openai": "OpenAI",
+            "Chatgpt": "ChatGPT",
+            "Codex": "Codex",
+            "Claude": "Claude",
+            "Aws": "AWS",
+        }
+        for original, replacement in replacements.items():
+            title = title.replace(original, replacement)
+        return title
+
+    def _normalize_title(self, text):
+        lowered = self._clean_text(text).lower()
+        lowered = re.sub(r"[^a-z0-9\s]", " ", lowered)
+        lowered = re.sub(r"\s+", " ", lowered).strip()
+        return lowered
+
+    def _collect_matches(self, text, terms):
+        matches = []
+        haystack = text.lower()
+        for term in terms:
+            term_lower = term.lower()
+            if term_lower in haystack:
+                matches.append(term)
+        return matches
+
+    def _is_official_source(self, source_name):
+        official_markers = (
+            "openai",
+            "anthropic",
+            "claude",
+            "github changelog",
+            "cisa",
+            "microsoft security blog",
+            "aws security blog",
+        )
+        source_lower = source_name.lower()
+        return any(marker in source_lower for marker in official_markers)
+
+    def _compute_reason(self, official, company_hits, focus_hits, stack_hits, stream):
+        parts = []
+        if official:
+            parts.append("source officielle")
+        if company_hits:
+            parts.append(", ".join(company_hits[:2]))
+        if focus_hits:
+            parts.append(", ".join(focus_hits[:2]))
+        if stack_hits and stream == "cyber":
+            parts.append(", ".join(stack_hits[:2]))
+        return " | ".join(parts[:3])
+
+    def _classify_alert(self, stream, source, title, summary):
+        text = f"{title} {summary}".strip()
+        source_name = source.get("name", "Source")
+        source_weight = float(source.get("weight", 1.0))
+        official = self._is_official_source(source_name)
+        score = source_weight
+        tags = []
+
+        stack_terms = self.preferences.get("dev_stack_terms", [])
+        stack_hits = self._collect_matches(text, stack_terms)
+        score += len(stack_hits) * 1.2
+        tags.extend(stack_hits[:3])
+
+        if stream == "cyber":
+            focus_hits = self._collect_matches(text, self.preferences.get("cyber_focus_terms", []))
+            priority_hits = self._collect_matches(text, self.cyber_priority_aliases)
+            score += len(focus_hits) * 2.0
+            score += len(priority_hits) * 2.5
+            if official:
+                score += 1.5
+            if "cve-" in text.lower():
+                score -= 4.0
+            tags.extend(focus_hits[:3])
+            tags.extend(priority_hits[:3])
+            match = score >= self.cyber_min_score or bool(stack_hits)
+            reason = self._compute_reason(official, [], focus_hits or priority_hits, stack_hits, stream)
+            return score, match, tags, reason
+
+        company_hits = []
+        for company in self.preferences.get("companies", []):
+            aliases = self.ai_company_aliases.get(company, [company])
+            if self._collect_matches(text, aliases):
+                company_hits.append(company)
+
+        focus_terms = list(self.preferences.get("ai_focus_terms", [])) + self.ai_focus_aliases
+        focus_hits = self._collect_matches(text, focus_terms)
+
+        score += len(company_hits) * 3.0
+        score += len(focus_hits) * 1.8
+        if official:
+            score += 2.0
+
+        if source_name in {"OpenAI Status", "Claude Status", "Claude Code Releases", "Anthropic News", "OpenAI Updates"}:
+            score += 2.5
+
+        tags.extend(company_hits[:2])
+        tags.extend(focus_hits[:4])
+
+        # The serious external media only matters if it mentions the target companies or products.
+        if source_name in {"The Verge AI", "TechCrunch AI"} and not company_hits:
+            score = 0.0
+
+        match = score >= self.ai_min_score and (bool(company_hits) or official)
+        reason = self._compute_reason(official, company_hits, focus_hits, [], stream)
+        return score, match, tags, reason
+
+    def _make_alert(self, stream, source, title, link, summary="", date=None, severity="Info", alert_type="Article"):
+        clean_title = self._clean_text(title)
+        clean_summary = self._shorten(summary)
+        if not clean_title or not link:
+            return None
+
+        score, match, tags, reason = self._classify_alert(stream, source, clean_title, clean_summary)
+        minimum_score = self.cyber_min_score if stream == "cyber" else self.ai_min_score
+        if score < minimum_score and not match:
+            return None
+
+        return {
+            "id": link,
+            "title": clean_title,
+            "summary": clean_summary,
+            "source": source.get("name", "Source"),
+            "type": alert_type,
+            "severity": severity,
+            "link": link,
+            "match": match,
+            "date": self._normalize_date(date),
+            "stream": stream,
+            "score": round(score, 1),
+            "reason": reason,
+            "tags": list(dict.fromkeys(tags))[:5],
+        }
+
     def _register_source_result(self, source_name, success, reason=None):
         self.source_attempts += 1
         if success:
@@ -94,260 +310,348 @@ class ThreatIntelFetcher:
             failure["reason"] = reason
         self.failed_sources.append(failure)
 
-    def _extract_severity(self, metrics):
-        for metric_key in ("cvssMetricV40", "cvssMetricV31", "cvssMetricV30", "cvssMetricV2"):
-            metric_entries = metrics.get(metric_key, [])
-            if not metric_entries:
-                continue
+    def _append_alert(self, alert):
+        if alert:
+            self.new_data["alerts"].append(alert)
 
-            metric = metric_entries[0]
-            severity = metric.get("baseSeverity")
-            if severity:
-                return severity
-
-            severity = metric.get("cvssData", {}).get("baseSeverity")
-            if severity:
-                return severity
-
-        return "Inconnu"
-
-    def _finalize_alerts(self):
-        deduplicated_alerts = {}
-
-        for alert in self.new_data["alerts"]:
-            alert_id = alert.get("id")
-            if not alert_id:
-                continue
-
-            normalized_alert = dict(alert)
-            normalized_alert["date"] = self._normalize_date(normalized_alert.get("date"))
-            current_entry = deduplicated_alerts.get(alert_id)
-
-            if current_entry is None:
-                deduplicated_alerts[alert_id] = normalized_alert
-                continue
-
-            current_date = self._parse_datetime(current_entry.get("date"))
-            candidate_date = self._parse_datetime(normalized_alert.get("date"))
-            if candidate_date and (current_date is None or candidate_date >= current_date):
-                deduplicated_alerts[alert_id] = normalized_alert
-
-        self.new_data["alerts"] = sorted(
-            deduplicated_alerts.values(),
-            key=lambda alert: self._parse_datetime(alert.get("date")) or datetime.min.replace(tzinfo=timezone.utc),
-            reverse=True,
-        )
-
-    def _check_keywords(self, text):
-        # Je vérifie si mes mots-clés configurés sont présents dans le texte
-        keywords = self.config.get("keywords", [])
-        text_lower = (text or "").lower()
-        for kw in keywords:
-            if kw.lower() in text_lower:
-                return True
-        return False
-
-    def fetch_rss(self):
-        # Je parcours mes flux RSS configurés
-        rss_sources = self.config.get("sources", {}).get("rss", [])
-        for source in rss_sources:
+    def fetch_rss_sources(self, sources, stream):
+        for source in sources:
             source_name = source.get("name", "Source RSS inconnue")
             source_url = source.get("url")
             logging.info(f"Je récupère le flux RSS de : {source_name}")
-
             try:
                 feed = feedparser.parse(source_url)
                 status_code = getattr(feed, "status", 200)
                 entries = getattr(feed, "entries", [])
 
-                if status_code >= 400:
+                if status_code and status_code >= 400:
                     raise ValueError(f"HTTP {status_code}")
                 if getattr(feed, "bozo", 0) and not entries:
                     raise ValueError(str(getattr(feed, "bozo_exception", "Flux RSS invalide")))
 
-                for index, entry in enumerate(entries[: self.max_entries_per_rss_source], start=1):
-                    title = entry.get("title", "Article RSS")
+                for entry in entries[: self.max_entries_per_source]:
+                    title = entry.get("title", "Entrée RSS")
                     summary = entry.get("summary", "") or entry.get("description", "")
-                    link = entry.get("link") or f"{source_url}#entry-{index}"
-                    is_match = self._check_keywords(f"{title} {summary}")
-
-                    alert = {
-                        "id": link,
-                        "title": title,
-                        "source": source_name,
-                        "type": "Article RSS",
-                        "severity": "Info",
-                        "link": link,
-                        "match": is_match,
-                        "date": self._normalize_date(
-                            entry.get("published") or entry.get("updated") or entry.get("created")
-                        ),
-                    }
-                    self.new_data["alerts"].append(alert)
+                    link = entry.get("link")
+                    date = entry.get("published") or entry.get("updated") or entry.get("created")
+                    alert_type = "Officiel" if self._is_official_source(source_name) else "Veille"
+                    self._append_alert(
+                        self._make_alert(
+                            stream=stream,
+                            source=source,
+                            title=title,
+                            link=link,
+                            summary=summary,
+                            date=date,
+                            alert_type=alert_type,
+                        )
+                    )
 
                 self._register_source_result(source_name, True)
-            except Exception as e:
-                logging.warning(f"Le flux {source_name} a échoué : {e}")
-                self._register_source_result(source_name, False, str(e))
+            except Exception as exc:
+                logging.warning(f"Le flux {source_name} a échoué : {exc}")
+                self._register_source_result(source_name, False, str(exc))
 
-    def fetch_nist_cve(self):
-        # Je récupère les vulnérabilités récentes depuis l'API NIST NVD
-        logging.info("Je récupère les données de l'API NVD du NIST...")
-        url = "https://services.nvd.nist.gov/rest/json/cves/2.0"
-        end_date = self.run_started_at
-        start_date = end_date - timedelta(days=self.cve_days_window)
-        params = {
-            "resultsPerPage": self.max_nvd_results,
-            "pubStartDate": self._format_iso(start_date),
-            "pubEndDate": self._format_iso(end_date),
-        }
-        headers = {}
-        
-        # Je récupère ma clé d'API si elle est définie dans l'environnement
-        nvd_api_key = os.environ.get("NVD_API_KEY")
-        if nvd_api_key:
-            headers["apiKey"] = nvd_api_key
-            logging.info("J'utilise ma clé d'API NVD pour contourner le rate-limit.")
-
+    def fetch_anthropic_news(self, source):
+        source_name = source.get("name", "Anthropic News")
         try:
-            response = requests.get(url, headers=headers, params=params, timeout=self.request_timeout)
+            response = self.session.get(source["url"], timeout=self.request_timeout)
             response.raise_for_status()
+            soup = BeautifulSoup(response.text, "html.parser")
 
-            data = response.json()
-            vulnerabilities = data.get("vulnerabilities", [])
-            fresh_alerts = []
+            items = []
+            for anchor in soup.select('a[href^="/news/"]'):
+                href = anchor.get("href")
+                title_node = anchor.find(["h2", "h3", "h4", "h5"])
+                title = title_node.get_text(" ", strip=True) if title_node else self._slug_to_title(href.rstrip("/").split("/")[-1])
+                summary_node = anchor.find("p")
+                summary = summary_node.get_text(" ", strip=True) if summary_node else ""
+                date_node = anchor.find("time")
+                date = date_node.get("datetime") or date_node.get_text(" ", strip=True) if date_node else None
+                if href and title:
+                    items.append((href, title, summary, date))
 
-            for vuln in vulnerabilities:
-                cve = vuln.get("cve", {})
-                cve_id = cve.get("id", "Inconnu")
-                descriptions = cve.get("descriptions", [])
-                desc_text = descriptions[0].get("value", "") if descriptions else ""
-                published_at = self._parse_datetime(cve.get("published"))
-
-                if published_at is None:
+            seen = set()
+            for href, title, summary, date in items:
+                if href in seen:
                     continue
-                if published_at < start_date or published_at > end_date:
-                    continue
-
-                metrics = cve.get("metrics", {})
-                severity = self._extract_severity(metrics)
-                is_match = self._check_keywords(desc_text)
-
-                fresh_alerts.append(
-                    {
-                        "id": cve_id,
-                        "title": f"Vulnérabilité {cve_id}",
-                        "source": "NIST NVD",
-                        "type": "CVE",
-                        "severity": severity,
-                        "link": f"https://nvd.nist.gov/vuln/detail/{cve_id}",
-                        "match": is_match,
-                        "date": self._format_iso(published_at),
-                    }
+                seen.add(href)
+                self._append_alert(
+                    self._make_alert(
+                        stream="ai",
+                        source=source,
+                        title=title,
+                        link=urljoin(source["url"], href),
+                        summary=summary,
+                        date=date,
+                        alert_type="Officiel",
+                    )
                 )
 
-            fresh_alerts.sort(key=lambda alert: self._parse_datetime(alert["date"]), reverse=True)
-            self.new_data["alerts"].extend(fresh_alerts[: self.max_nvd_results])
-            self._register_source_result("NIST NVD", True)
-        except Exception as e:
-            logging.error(f"Erreur lors de la requête vers le NIST : {e}")
-            self._register_source_result("NIST NVD", False, str(e))
+            self._register_source_result(source_name, True)
+        except Exception as exc:
+            logging.warning(f"La source web {source_name} a échoué : {exc}")
+            self._register_source_result(source_name, False, str(exc))
+
+    def fetch_openai_sitemap(self, source):
+        source_name = source.get("name", "OpenAI Updates")
+        cutoff = self.run_started_at - timedelta(days=self.sitemap_days_window)
+        include_path_fragments = ("/index/", "/research/")
+        important_slug_terms = (
+            "gpt",
+            "chatgpt",
+            "codex",
+            "sora",
+            "api",
+            "reasoning",
+            "model",
+            "models",
+            "agent",
+            "memory",
+            "safety",
+            "research",
+        )
+
+        try:
+            response = self.session.get(source["url"], timeout=self.request_timeout)
+            response.raise_for_status()
+            root = ET.fromstring(response.text)
+            namespace = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+
+            for url_node in root.findall(".//sm:url", namespace):
+                loc_node = url_node.find("sm:loc", namespace)
+                lastmod_node = url_node.find("sm:lastmod", namespace)
+                if loc_node is None:
+                    continue
+
+                loc = loc_node.text
+                lastmod = self._parse_datetime(lastmod_node.text if lastmod_node is not None else None)
+                parsed = urlparse(loc)
+                slug = parsed.path.rstrip("/").split("/")[-1]
+                normalized_path = parsed.path.rstrip("/")
+                if not any(fragment in parsed.path for fragment in include_path_fragments):
+                    continue
+                if normalized_path in {"", "/research", "/news"}:
+                    continue
+                if lastmod and lastmod < cutoff:
+                    continue
+                if not any(term in slug.lower() for term in important_slug_terms):
+                    continue
+
+                title = self._slug_to_title(slug)
+                summary = "Mise à jour officielle détectée sur le site OpenAI."
+                self._append_alert(
+                    self._make_alert(
+                        stream="ai",
+                        source=source,
+                        title=title,
+                        link=loc,
+                        summary=summary,
+                        date=lastmod,
+                        alert_type="Officiel",
+                    )
+                )
+
+            self._register_source_result(source_name, True)
+        except Exception as exc:
+            logging.warning(f"Le sitemap {source_name} a échoué : {exc}")
+            self._register_source_result(source_name, False, str(exc))
+
+    def fetch_nist_cve(self):
+        if not self.enable_nvd:
+            return
+
+    def _is_duplicate_alert(self, candidate, existing):
+        if candidate["stream"] != existing["stream"]:
+            return False
+        if candidate["id"] == existing["id"]:
+            return True
+
+        left = self._normalize_title(candidate.get("title"))
+        right = self._normalize_title(existing.get("title"))
+        if left == right:
+            return True
+        if not left or not right:
+            return False
+        return SequenceMatcher(None, left, right).ratio() >= self.dedupe_similarity_threshold
+
+    def _detect_company(self, alert):
+        haystack = f"{alert.get('source', '')} {alert.get('title', '')} {alert.get('summary', '')}".lower()
+        if any(alias in haystack for alias in self.ai_company_aliases["OpenAI"]):
+            return "OpenAI"
+        if any(alias in haystack for alias in self.ai_company_aliases["Anthropic"]):
+            return "Anthropic"
+        return None
+
+    def _diversify_ai_alerts(self, alerts):
+        selected = []
+        for company in self.preferences.get("companies", []):
+            company_candidates = [alert for alert in alerts if self._detect_company(alert) == company and alert not in selected]
+            if not company_candidates:
+                continue
+
+            official_candidates = [alert for alert in company_candidates if self._is_official_source(alert.get("source", ""))]
+            if official_candidates:
+                selected.append(official_candidates[0])
+                continue
+
+            for alert in alerts:
+                if alert in selected:
+                    continue
+                if self._detect_company(alert) == company:
+                    selected.append(alert)
+                    break
+
+        for alert in alerts:
+            if alert in selected:
+                continue
+            selected.append(alert)
+            if len(selected) >= self.max_items_per_stream:
+                break
+
+        return selected[: self.max_items_per_stream]
+
+    def _finalize_alerts(self):
+        sorted_alerts = sorted(
+            self.new_data["alerts"],
+            key=lambda alert: (
+                0 if self._is_official_source(alert.get("source", "")) else 1,
+                -float(alert.get("score", 0)),
+                self._parse_datetime(alert.get("date")) or datetime.min.replace(tzinfo=timezone.utc),
+            ),
+        )
+
+        deduplicated = []
+        for alert in sorted_alerts:
+            if any(self._is_duplicate_alert(alert, existing) for existing in deduplicated):
+                continue
+            deduplicated.append(alert)
+
+        deduplicated.sort(
+            key=lambda alert: (
+                0 if alert.get("stream") == "cyber" else 1,
+                -float(alert.get("score", 0)),
+                self._parse_datetime(alert.get("date")) or datetime.min.replace(tzinfo=timezone.utc),
+            )
+        )
+
+        cyber_alerts = [alert for alert in deduplicated if alert.get("stream") == "cyber"]
+        ai_alerts = [alert for alert in deduplicated if alert.get("stream") == "ai"]
+
+        cyber_alerts = cyber_alerts[: self.max_items_per_stream]
+        ai_alerts = self._diversify_ai_alerts(ai_alerts)
+
+        self.new_data["streams"] = {"cyber": cyber_alerts, "ai": ai_alerts}
+        self.new_data["alerts"] = cyber_alerts + ai_alerts
+        self.new_data["summary"] = {
+            "total_alerts": len(self.new_data["alerts"]),
+            "cyber_alerts": len(cyber_alerts),
+            "ai_alerts": len(ai_alerts),
+            "priority_alerts": sum(1 for alert in self.new_data["alerts"] if alert.get("match")),
+            "sources_count": len({alert.get("source") for alert in self.new_data["alerts"]}),
+        }
 
     def has_new_data(self):
-        # Je compare mes nouveaux IDs avec les anciens pour voir s'il y a du neuf
         old_ids = {alert["id"] for alert in self.current_data.get("alerts", [])}
         new_ids = {alert["id"] for alert in self.new_data["alerts"]}
-        # Si au moins un nouvel ID n'est pas dans les anciens, je considère qu'il y a de nouvelles données
         return not new_ids.issubset(old_ids)
 
     def save_data(self):
-        # J'enregistre mes données au format JSON
         try:
-            with open(self.data_path, 'w', encoding='utf-8') as f:
-                json.dump(self.new_data, f, ensure_ascii=False, indent=4)
-            logging.info("J'ai sauvegardé mes nouvelles données JSON avec succès.")
-            
-            # Je sauvegarde également une archive pour la date courante
+            with open(self.data_path, "w", encoding="utf-8") as file_obj:
+                json.dump(self.new_data, file_obj, ensure_ascii=False, indent=4)
+            logging.info("J'ai sauvegardé les nouvelles données JSON.")
+
             today_str = self.run_started_at.strftime("%Y-%m-%d")
             data_dir = os.path.dirname(self.data_path)
             daily_path = os.path.join(data_dir, f"{today_str}.json")
-            with open(daily_path, 'w', encoding='utf-8') as f:
-                json.dump(self.new_data, f, ensure_ascii=False, indent=4)
-                
-            # Je mets à jour mon index.json contenant l'historique
+            with open(daily_path, "w", encoding="utf-8") as file_obj:
+                json.dump(self.new_data, file_obj, ensure_ascii=False, indent=4)
+
             index_path = os.path.join(data_dir, "index.json")
             index_data = []
             if os.path.exists(index_path):
                 try:
-                    with open(index_path, 'r', encoding='utf-8') as f:
-                        index_data = json.load(f)
+                    with open(index_path, "r", encoding="utf-8") as file_obj:
+                        index_data = json.load(file_obj)
                 except Exception:
-                    pass
-            
-            # Je retire l'entrée du jour si elle existe déjà, pour la remplacer
+                    index_data = []
+
             index_data = [item for item in index_data if item.get("date") != today_str]
-            critical_alerts = sum(1 for a in self.new_data["alerts"] if a.get("severity", "").upper() in ["CRITICAL", "HIGH"])
-            
-            index_data.append({
-                "date": today_str,
-                "file": f"{today_str}.json",
-                "total_cves": len(self.new_data["alerts"]),
-                "critical_cves": critical_alerts
-            })
-            
-            # Je trie par date croissante par sécurité
-            index_data = sorted(index_data, key=lambda x: x["date"])
-            
-            with open(index_path, 'w', encoding='utf-8') as f:
-                json.dump(index_data, f, ensure_ascii=False, indent=4)
-            logging.info("J'ai mis à jour l'historique et index.json.")
-        except Exception as e:
-            logging.error(f"Je n'ai pas pu sauvegarder mon JSON : {e}")
+            summary = self.new_data.get("summary", {})
+            index_data.append(
+                {
+                    "date": today_str,
+                    "file": f"{today_str}.json",
+                    "total_alerts": summary.get("total_alerts", 0),
+                    "cyber_alerts": summary.get("cyber_alerts", 0),
+                    "ai_alerts": summary.get("ai_alerts", 0),
+                    "priority_alerts": summary.get("priority_alerts", 0),
+                    # Compatibilité avec les anciennes vues.
+                    "total_cves": summary.get("total_alerts", 0),
+                    "critical_cves": summary.get("priority_alerts", 0),
+                }
+            )
+            index_data = sorted(index_data, key=lambda item: item["date"])
+
+            with open(index_path, "w", encoding="utf-8") as file_obj:
+                json.dump(index_data, file_obj, ensure_ascii=False, indent=4)
+            logging.info("J'ai mis à jour l'historique.")
+        except Exception as exc:
+            logging.error(f"Je n'ai pas pu sauvegarder les fichiers JSON : {exc}")
 
     def update_readme(self):
-        # Je mets à jour dynamiquement mon README contenant les statistiques
         try:
-            critical_alerts = sum(1 for a in self.new_data["alerts"] if a.get("severity", "").upper() in ["CRITICAL", "HIGH"])
-            total_alerts = len(self.new_data["alerts"])
+            summary = self.new_data.get("summary", {})
             date_str = self.run_started_at.astimezone(timezone.utc).strftime("%d/%m/%Y à %H:%M UTC")
-
             stats_block = (
                 "<!-- STATS_START -->\n"
                 f"**Dernière mise à jour :** {date_str}  \n"
-                f"**Total d'alertes collectées :** {total_alerts}  \n"
-                f"**Alertes Critiques/Hautes :** {critical_alerts}  \n"
+                f"**Alertes Cyber retenues :** {summary.get('cyber_alerts', 0)}  \n"
+                f"**Alertes IA retenues :** {summary.get('ai_alerts', 0)}  \n"
+                f"**Alertes prioritaires :** {summary.get('priority_alerts', 0)}  \n"
                 "<!-- STATS_END -->"
             )
 
             if os.path.exists(self.readme_path):
-                with open(self.readme_path, 'r', encoding='utf-8') as f:
-                    content = f.read()
+                with open(self.readme_path, "r", encoding="utf-8") as file_obj:
+                    content = file_obj.read()
 
-                # J'utilise une simple substitution basée sur mes balises
                 if "<!-- STATS_START -->" in content:
                     new_content = re.sub(
-                        r"<!-- STATS_START -->.*<!-- STATS_END -->", 
-                        stats_block, 
-                        content, 
-                        flags=re.DOTALL
+                        r"<!-- STATS_START -->.*<!-- STATS_END -->",
+                        stats_block,
+                        content,
+                        flags=re.DOTALL,
                     )
                 else:
                     new_content = content + "\n\n" + stats_block
 
-                with open(self.readme_path, 'w', encoding='utf-8') as f:
-                    f.write(new_content)
-                logging.info("J'ai mis à jour mon README.md avec mes nouvelles statistiques.")
+                with open(self.readme_path, "w", encoding="utf-8") as file_obj:
+                    file_obj.write(new_content)
             else:
-                logging.warning("Le fichier README.md n'existe pas, je le crée.")
-                with open(self.readme_path, 'w', encoding='utf-8') as f:
-                    f.write(f"# Cyber Threat Intelligence Dashboard\n\n{stats_block}\n")
-        except Exception as e:
-            logging.error(f"Erreur lors de la mise à jour de mon README : {e}")
+                with open(self.readme_path, "w", encoding="utf-8") as file_obj:
+                    file_obj.write(f"# Cyber Threat Intelligence Dashboard\n\n{stats_block}\n")
+            logging.info("J'ai mis à jour le README.")
+        except Exception as exc:
+            logging.error(f"Erreur pendant la mise à jour du README : {exc}")
 
     def run(self):
-        # C'est la fonction principale de mon script
-        logging.info("Je lance mon processus de récupération Threat Intel...")
-        self.fetch_rss()
+        logging.info("Je lance la veille cyber + IA ciblée.")
+
+        self.fetch_rss_sources(self.sources.get("cyber_rss", []), stream="cyber")
+        self.fetch_rss_sources(self.sources.get("ai_rss", []), stream="ai")
+
+        for source in self.sources.get("ai_web", []):
+            strategy = source.get("strategy")
+            if strategy == "anthropic_news":
+                self.fetch_anthropic_news(source)
+
+        for source in self.sources.get("ai_sitemaps", []):
+            strategy = source.get("strategy")
+            if strategy == "openai_sitemap":
+                self.fetch_openai_sitemap(source)
+
         self.fetch_nist_cve()
         self._finalize_alerts()
 
@@ -355,15 +659,13 @@ class ThreatIntelFetcher:
             raise RuntimeError("Aucune source n'est configurée pour la collecte.")
         if not self.successful_sources:
             raise RuntimeError("Toutes les sources ont échoué. Snapshot annulé pour préserver les données existantes.")
+        if not self.new_data["alerts"]:
+            raise RuntimeError("La collecte n'a produit aucune alerte utile. Snapshot annulé.")
 
         if self.failed_sources:
             logging.warning(f"Sources en échec pendant cette exécution : {self.failed_sources}")
 
-        if not self.new_data["alerts"]:
-            logging.warning("La collecte s'est terminée sans aucune alerte exploitable.")
-
         if self.force_daily_snapshot or self.has_new_data():
-            logging.info("Je procède à la sauvegarde du snapshot quotidien.")
             self.save_data()
             self.update_readme()
         else:
@@ -371,5 +673,4 @@ class ThreatIntelFetcher:
 
 
 if __name__ == "__main__":
-    fetcher = ThreatIntelFetcher()
-    fetcher.run()
+    ThreatIntelFetcher().run()
