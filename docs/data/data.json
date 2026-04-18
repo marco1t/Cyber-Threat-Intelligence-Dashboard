@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-04-17T23:27:57Z",
+    "last_updated": "2026-04-18T09:54:38Z",
     "alerts": [
         {
             "id": "https://www.microsoft.com/en-us/security/blog/2026/04/16/dissecting-sapphire-sleets-macos-intrusion-from-lure-to-compromise/",
@@ -164,7 +164,7 @@
             "severity": "Info",
             "link": "https://www.anthropic.com/news/claude-opus-4-7",
             "match": true,
-            "date": "2026-04-17T23:27:57Z",
+            "date": "2026-04-18T09:54:38Z",
             "stream": "ai",
             "score": 22.5,
             "reason": "source officielle | Anthropic | Claude, model",
@@ -184,7 +184,7 @@
             "severity": "Info",
             "link": "https://www.anthropic.com/news/claude-design-anthropic-labs",
             "match": true,
-            "date": "2026-04-17T23:27:57Z",
+            "date": "2026-04-18T09:54:38Z",
             "stream": "ai",
             "score": 20.7,
             "reason": "source officielle | Anthropic | Claude, Anthropic",
@@ -362,7 +362,7 @@
                 "severity": "Info",
                 "link": "https://www.anthropic.com/news/claude-opus-4-7",
                 "match": true,
-                "date": "2026-04-17T23:27:57Z",
+                "date": "2026-04-18T09:54:38Z",
                 "stream": "ai",
                 "score": 22.5,
                 "reason": "source officielle | Anthropic | Claude, model",
@@ -382,7 +382,7 @@
                 "severity": "Info",
                 "link": "https://www.anthropic.com/news/claude-design-anthropic-labs",
                 "match": true,
-                "date": "2026-04-17T23:27:57Z",
+                "date": "2026-04-18T09:54:38Z",
                 "stream": "ai",
                 "score": 20.7,
                 "reason": "source officielle | Anthropic | Claude, Anthropic",
