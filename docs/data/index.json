@@ -102,5 +102,15 @@
         "priority_alerts": 10,
         "total_cves": 10,
         "critical_cves": 10
+    },
+    {
+        "date": "2026-04-25",
+        "file": "2026-04-25.json",
+        "total_alerts": 10,
+        "cyber_alerts": 5,
+        "ai_alerts": 5,
+        "priority_alerts": 10,
+        "total_cves": 10,
+        "critical_cves": 10
     }
 ]
