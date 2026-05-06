@@ -7,7 +7,7 @@ L'objectif de ce projet est de consolider ma veille technologique en cybersécur
 ## Suivi des Alertes
 
 <!-- STATS_START -->
-**Dernière mise à jour :** 05/05/2026 à 08:12 UTC  
+**Dernière mise à jour :** 06/05/2026 à 08:28 UTC  
 **Alertes Cyber retenues :** 5  
 **Alertes IA retenues :** 5  
 **Alertes prioritaires :** 10  
